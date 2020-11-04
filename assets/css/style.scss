@@ -1,0 +1,194 @@
+---
+---
+@import "{{ site.theme }}";
+
+header {
+  display: none;
+}
+
+.footer {
+padding: 50px;
+text-align: center;
+}
+
+.white-header-center {
+    text-align: center;
+    color: white;
+    
+}
+
+#concept-info {
+    border-width: 2px;
+    border-color: #b5e853;
+    border-style:solid;
+    margin:10px;
+    margin-bottom: 20px;
+    padding:10px;
+}
+
+.fb_iframe_widget span {
+    vertical-align: inherit !important;
+}
+
+#trello-instructions {
+    border-width: 2px;
+    border-color: #b5e853;
+    border-style:solid;
+    margin:10px;
+    padding:10px;
+}
+
+#rules-explanation {
+    color: black;
+    background-color: white;
+    margin:10px;
+    padding:10px;
+    display:inline-block;
+
+}
+
+#bounty-info-trellolink {
+    margin:10px;
+    padding:10px;
+    display:inline-block;
+
+}
+
+.btn {
+    background: #b5e853;
+    color: black;
+    text-shadow: none;
+    white-space: nowrap;
+}
+
+.btn:hover {
+    background: #b5e853;
+    color: black;
+    text-shadow: none;
+    white-space: nowrap;
+}
+
+
+#tweet-button{
+    display: inline-block;
+}
+
+.page_share {
+    position: relative;
+    float: left;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    clear: both;
+    vertical-align: top;
+    line-height: normal
+
+}
+
+.bounty-item-title {
+    font-weight: bold;
+}
+
+/* nav */
+.nav-container {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+    position: relative;
+}
+
+.nav-container a {
+    color: white;
+}
+
+.top-nav {
+    font-size: 14px;
+    font-weight: 400;
+    position: absolute;
+    width: fit-content;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 13px;
+}
+
+.top-nav a {
+    display: inline-block;
+    white-space: nowrap;
+    margin-bottom: 6px;
+}
+
+.top-nav .top-nav-border {
+    border-right: 1px solid white;
+    padding-right: 10px;
+    margin-right: 10px;
+}
+
+.nav-container .nav-corner {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 14px;
+    color: white;
+    text-decoration: none;
+}
+
+.nav-container h1{
+    display: inline-block;
+    color: white;
+    margin: 40px 0;
+    font-size: 55px;
+    line-height: 55px;
+  }
+
+.nav-corner img {
+    margin-bottom: -10px;
+    margin-left: 15px;
+    width: 27px;
+    cursor: pointer;
+}
+
+.nav-tagline{
+    float: right;
+  }
+
+.nav-logo {
+    margin: 45px 0;
+    max-width: 90%;
+    margin-top: 70px;
+}
+
+
+
+@media(max-width: 870px){
+    .nav-logo{
+      width: 85%;
+      margin-bottom: 10px !important;
+      max-width: 300px;
+    }
+    .nav-logo{
+        margin: 55px 0;
+      }
+  }
+
+@media(max-width:900px){
+    .nav-logo{
+        width: 85%;
+        margin-bottom: 10px !important;
+        max-width: 300px;
+      }
+}
+
+@media(max-width:685px){
+.nav-container .nav-corner{
+    position: relative;
+    margin-top: 14px;
+    width: 100%;
+    right: auto;
+}
+.nav-container .top-nav{
+    position: relative;
+    width: 100%;
+    transform: none;
+    left: auto;
+}
+}

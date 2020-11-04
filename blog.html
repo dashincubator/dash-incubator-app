@@ -1,0 +1,16 @@
+---
+layout: default
+title: Blog
+---
+<h1>Latest Posts</h1>
+
+<ul>
+  {% for post in site.posts %}
+    <li>
+      <h2><a href="{{ post.url | prepend:site.baseurl }}">{{ post.title }}</a></h2>
+      <h4>{{ post.date | date_to_string }} - {{ post.author }}</h4>
+      {{ post.excerpt }}
+      <hr>
+    </li>
+  {% endfor %}
+</ul>

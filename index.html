@@ -1,0 +1,72 @@
+---
+layout: default
+---
+<script>
+
+        $(document).ready(async function () {
+                //console.log('board id index', boardId);
+                $('#loading-data').show();
+
+                try {
+                        let data = await getTrelloAllData();
+                        $('#loading-data').hide();
+                        let lists = transformTrelloData(data);
+                        //parse data to html tables & display
+                        $('#list_project').append(listToTable('production', 'Production', lists.project));
+                        $('#list_spec').append(listToTable('spec', 'Specification', lists.spec));
+                        $('#list_service').append(listToTable('service', 'Service', lists.service));
+                        $('#list_job').append(listToTable('job', 'Job', lists.job));
+                        $('#list_qa').append(listToTable('qa', 'QA', lists.qa));
+                }
+                catch (e) {
+                        $('#loading-data').css("background-color", "red");
+                        $('#loading-data').text(`There was an error loading the data: ${e}`);
+                        $('#loading-data').show();
+                }
+
+        });
+</script>
+
+<p>
+Dash Incubator is an open-source app that connects users who want to earn rewards for working together to improve the Dash cryptocurrency.
+</p>
+<p>
+Funded from a Dash blockchain proposal and focused on developing tools, infrastructure and Dapps for Dash’s Evolution upgrade, any kind of work that aligns with our strategy can be incentivized, and worked on together with full transparency.
+</p>
+<p>     
+Whether you want to propose ideas, develop code, manage & promote projects, or improve the Incubator app itself, check the bounties below or join the Dash Devs <a href="http://chat.dashdevs.org" target="_blank">Discord</a> server to chat with like-minded people in the #dash-incubator channel.
+</p>
+
+<div style="background:red;margin:20px;padding:10px;text-align:center;">This is a pre-release version: displayed data is for testing purposes only</div>
+
+        <h1  class="white-header-center">BOUNTIES</h1>
+
+<p>This is a list of tasks for which rewards are available.
+</p>
+
+<h2>CONCEPTS</h2>
+<div id="concept-info">
+        <h3>Get rewards for your ideas!</h3>
+        Learn more about <a href="rules.html#31-concepts">creating concepts</a>
+</div>
+<div id="loading-data" style="display:none;">Loading data...</div>
+
+<h2>PROJECTS</h2>
+
+<div id="list_project"></div>
+
+<h2>SPECIFICATIONS</h2>
+
+<div id="list_spec"></div>
+
+<h2>SERVICES</h2>
+
+<div id="list_service"></div>
+
+<h2>JOBS</h2>
+
+<div id="list_job"></div>
+
+<h2>QA</h2>
+
+<div id="list_qa"></div>

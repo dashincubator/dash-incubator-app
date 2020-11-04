@@ -1,0 +1,23 @@
+theme: jekyll-theme-hacker
+# Allow future dated posts
+future: true
+title: Dash Incubator
+url: "https://dashincubator.app" # the base hostname & protocol for your site
+plugins:
+  - jekyll-sitemap
+tagline: Get rewards for helping to build Dash
+description: Claim bounties for new ideas, specifying and working on tasks, and carring out QA on Dash blockchain software.
+logo: /assets/image/incubator-logo.jpg
+# Id of the Trello board
+board: D5wypdJ0
+# Dash USD rate as float (e.g. 75.00)
+dashusd: 75.00
+twitter:
+  username: dashincubator
+  card: summary
+social:
+  name: Dash Incubator
+  links:
+    - https://twitter.com/dashincubator
+    - https://github.com/dashincubator
+    - https://chat.dashdevs.org

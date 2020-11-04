@@ -1,0 +1,14 @@
+---
+layout: default
+---
+<h1>{{ page.title }}</h1>
+<p>{{ page.date | date_to_string }} - {{ page.author }}</p>
+<div id='page-share' class="page_share">
+    <div class="fb-share-button" data-layout="button" data-size="small"><a target="_blank"
+            href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"
+            class="fb-xfbml-parse-ignore">Share</a></div>
+    <div id="tweet-button"></div>
+    <a id="tweet-link" class="twitter-share-button">Tweet</a>
+</div>
+
+{{ content }}
