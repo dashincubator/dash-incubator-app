@@ -2,3 +2,5 @@
 _site/
 *-cache/
 .jekyll-metadata
+
+CNAME
