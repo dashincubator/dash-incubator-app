@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: default-app
 ---
 <script>
 
@@ -10,7 +10,7 @@ layout: default
                 try {
                         let data = await getTrelloAllData();
                         $('#loading-data').hide();
-                        let lists = transformTrelloData(data);
+                        let lists = transformTrelloData(data).lists;
                         //parse data to html tables & display
                         $('#list_project').append(listToTable('production', 'Production', lists.project));
                         $('#list_spec').append(listToTable('spec', 'Specification', lists.spec));

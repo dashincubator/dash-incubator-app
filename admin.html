@@ -1,0 +1,224 @@
+---
+layout: default-app
+---
+<script>
+
+        $(document).ready(async function () {
+                //console.log('board id index', boardId);
+                $('#loading-data').show();
+
+                try {
+                        let data = await getTrelloAllData();
+                        $('#loading-data').hide();
+                        $('#total-cards').text(data.length);
+                        let transformedData = transformTrelloData(data);
+                        let lists = transformedData.lists;
+                        let debug = transformedData.debug;
+                        //debug admin data
+                        $('.data-concepts').text(debug.concepts);
+                        $('#total-concepts').text(debug.concepts.length);
+                        $('#data-archived').text(debug.archived);
+                        $('#total-archived').text(debug.archived.length);
+                        $('#cards-processed').text(debug.removedListsCount);
+                        $('#data-no-checklists').text(debug.noChecklists);
+                        $('#total-no-checklists').text(debug.noChecklists.length);
+                        
+                        $('#total-warnings').text(debug.warnings.cardWarnings.length + debug.warnings.taskWarnings.length);
+                        $('#data-warnings-card').html(warningsToTable(debug.warnings.cardWarnings, 'card'));
+                        $('#total-warnings-card').text(debug.warnings.cardWarnings.length);
+                        $('#data-warnings-task').html(warningsToTable(debug.warnings.taskWarnings, 'task'));
+                        $('#total-warnings-task').text(debug.warnings.taskWarnings.length);
+                        
+                        
+
+                        //parse data to html tables & display
+                        $('#list_project').append(listToTable('production', 'Production', lists.project));
+                        $('#list_spec').append(listToTable('spec', 'Specification', lists.spec));
+                        $('#list_service').append(listToTable('service', 'Service', lists.service));
+                        $('#list_job').append(listToTable('job', 'Job', lists.job));
+                        $('#list_qa').append(listToTable('qa', 'QA', lists.qa));
+                }
+                catch (e) {
+                        console.log('Something went wrong:', e);
+                        $('#loading-data').css("background-color", "red");
+                        $('#loading-data').text(`There was an error loading the data: ${e}`);
+                        $('#loading-data').show();
+                }
+
+        });
+</script>
+
+
+<h1 class="white-header-center">ADMIN</h1>
+<h2>APP CONFIG</h2>
+
+<h3>Dash Rate</h3>
+<p>
+        Set in <a href="{{ site.repoBaseUrl }}/tree/master/_data/app/dash.yml"  target="_blank">{{ site.repoBaseUrl }}/tree/master/_data/app/dash.yml</a>
+</p>
+<table>
+        <thead>
+                <th>variable</th>
+                <th>explanation</th>
+                <th>value</th>
+        </thead>
+        <tr>
+                <td>dashusd</td>
+                <td>Dash USD rate as float (e.g. 75.00)</td>
+                <td>{{ site.data.app.dash.dashusd }}</td>
+        </tr>
+</table>
+
+<h3>Trello Board</h3>
+<p>
+        Set in <a href="{{ site.repoBaseUrl }}/tree/master/_data/app/trello.yml" target="_blank">{{ site.repoBaseUrl }}/tree/master/_data/app/trello.yml</a>
+</p>
+<p>
+        Using data from board <a href="https://trello.com/b/{{ site.data.app.trello.board }}" target="_blank">https://trello.com/b/{{ site.data.app.trello.board }}</a>
+</p>
+<table>
+        <thead>
+                <th>variable</th>
+                <th>explanation</th>
+                <th>value</th>
+        </thead>
+        <tr>
+                <td>key</td>
+                <td>Api key for the trello api user</td>
+                <td>{{ site.data.app.trello.key }}</td>
+        </tr>
+        <tr>
+                <td>board</td>
+                <td>Id of the Trello Board</td>
+                <td>{{ site.data.app.trello.board }}</td>
+        </tr>
+        <tr>
+                <td>concepts</td>
+                <td>Id of the Trello Concepts List (excluded)</td>
+                <td>{{ site.data.app.trello.concepts }}</td>
+        </tr>
+        <tr>
+                <td>archive</td>
+                <td>Id of the Trello Archive List (excluded)</td>
+                <td>{{ site.data.app.trello.archive }}</td>
+        </tr>
+        <tr>
+                <td>customFieldWorkTypeId</td>
+                <td></td>
+                <td>{{ site.data.app.trello.customFieldWorkTypeId }}</td>
+        </tr>
+        <tr>
+                <td>customFieldWorkTypeValueProject</td>
+                <td></td>
+                <td>{{ site.data.app.trello.customFieldWorkTypeValueProject }}</td>
+        </tr>
+        <tr>
+                <td>customFieldWorkTypeValueProject</td>
+                <td></td>
+                <td>{{ site.data.app.trello.customFieldWorkTypeValueProject }}</td>
+        </tr>
+        <tr>
+                <td>customFieldWorkTypeValueJob</td>
+                <td></td>
+                <td>{{ site.data.app.trello.customFieldWorkTypeValueJob }}</td>
+        </tr>
+        <tr>
+                <td>customFieldSkillsId</td>
+                <td></td>
+                <td>{{ site.data.app.trello.customFieldSkillsId }}</td>
+        </tr>
+</table>
+
+<h1 class="white-header-center">UNASSIGNED CONCEPTS</h1>
+<p>
+        <strong>These concepts have not yet been assigned an admin.</strong>
+</p>
+<p>TODO: CHECK IF CONCEPT LIST CARDS ARE COMPLETE ETC.</p>
+<p>TODO: CHECK FOR NEWLY SUBMITTED IDEAS WHICH HAVE NOT BEEN CREATED AS CONCEPTS</p>
+<div class="data-concepts"></div>
+
+
+
+<h1 class="white-header-center">DATA PROCESSING</h1>
+<table>
+<tr>
+        <td>total number of Trello Cards</td>
+        <td id="total-cards"></td>
+</tr>
+<tr>
+        <td>Not processed as in "Concepts" List</td>
+        <td id="total-concepts"></td>
+</tr>
+<tr>
+        <td colspan="2" class="data-concepts"></td>
+</tr>
+<tr>
+        <td>Not processed as in "Archived" List</td>
+        <td id="total-archived"></td>
+</tr>
+<tr>
+        <td colspan="2" id="data-archived"></td>
+</tr>
+<tr>
+        <td>Card processed</td>
+        <td id="cards-processed"></td>
+</tr>
+<tr>
+        <td>Cards ignored because they have no checklists</td>
+        <td id="total-no-checklists"></td>
+</tr>
+<tr>
+        <td colspan="2" id="data-no-checklists"></td>
+</tr>
+<tr>
+        <td>Total WARNINGS</td>
+        <td id="total-warnings"></td>
+</tr>
+<tr>
+        <td>Cards Warnings</td>
+        <td id="total-warnings-card"></td>
+</tr>
+<tr>
+        <td colspan="2" id="data-warnings-card"></td>
+</tr>
+<tr>
+        <td>Task Warnings</td>
+        <td id="total-warnings-task"></td>
+</tr>
+<tr>
+        <td colspan="2" id="data-warnings-task"></td>
+</tr>
+
+</table>
+
+
+<h1 class="white-header-center">OUTPUT</h1>
+
+<p>
+        This following will be displayed on the main page:
+</p>
+<h2>CONCEPTS</h2>
+<div id="list concepts">
+</div>
+
+<div id="loading-data" style="display:none;">Loading data...</div>
+
+<h2>PROJECTS</h2>
+
+<div id="list_project"></div>
+
+<h2>SPECIFICATIONS</h2>
+
+<div id="list_spec"></div>
+
+<h2>SERVICES</h2>
+
+<div id="list_service"></div>
+
+<h2>JOBS</h2>
+
+<div id="list_job"></div>
+
+<h2>QA</h2>
+
+<div id="list_qa"></div>

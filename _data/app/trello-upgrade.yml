@@ -1,0 +1,17 @@
+
+## SETTINGS FOR CONNECTING TO A TRELLO BOARD 
+# Api key for the trello api user
+key : 910955be8cf85efce2eb715fea302f2b
+# Id of the Trello board
+board: 6Hc3l6rn
+# Ids of the Trello Concepts & Archive Lists (to be excluded)
+# retrieve list ids using: https://api.trello.com/1/board/<boardId>/lists?key=<key>
+concepts: 5fa3cf49b925368fe1f4942a
+archive: 5fa3cf49b925368fe1f4942f 
+# Ids of the Trello Custom Field Ids & Values
+# retreive list ids using: https://api.trello.com/1/board/<boardId>/customFields?key=<key>
+customFieldWorkTypeId: 5fa3d39af4796250b469c2fa
+customFieldWorkTypeValueProject: 5fa3d3b45a36122981585a93
+customFieldWorkTypeValueService: 5fa3d3b73fb0bc47e1471d32
+customFieldWorkTypeValueJob: 5fa3d3ba27f00a3601b1d136
+customFieldSkillsId: 5fa3d3f5c71db224c5328a42
