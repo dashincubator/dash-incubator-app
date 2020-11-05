@@ -81,9 +81,9 @@ function transformTrelloData(data) {
                 let ignoreBadTaskListName;
                 let checklistName = checklist.name;
                 //We don't need Concept Tasks
-                if (checklistName != 'Production Tasks' ||
-                    checklistName != 'Service Tasks' ||
-                    checklistName != 'Job Tasks' ||
+                if (checklistName != 'Production Tasks' &&
+                    checklistName != 'Service Tasks' &&
+                    checklistName != 'Job Tasks' &&
                     checklistName != 'QA Tasks') {
                     ignoreBadTaskListName = true;
 
