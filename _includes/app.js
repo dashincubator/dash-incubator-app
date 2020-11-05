@@ -31,15 +31,16 @@ function transformTrelloData(data) {
         const listIdConcepts = TRELLO_LIST_ID_CONCEPTS;
         const listIdArchive = TRELLO_LIST_ID_ARCHIVE;
 
-        let concepts = data.filter(item => item.idList == listIdConcepts);
-        let archived = data.filter(item => item.idList == listIdArchive);
+        let concepts = data.filter(item => item.idList == listIdConcepts).map(item=>{return {warningText: 'Concepts List - Excluded', cardName: item.name, cardUrl: item.shortUrl}});
+        let archived = data.filter(item => item.idList == listIdArchive).map(item=>{return {warningText: 'Archived List - Excluded', cardName: item.name, cardUrl: item.shortUrl}});
+
 
         let removedConceptsAndArchived = data.filter(item => item.idList !== listIdConcepts && item.idList !== listIdArchive);
 
         let removedConceptsAndArchivedCount = removedConceptsAndArchived.length;
 
         //only get cards with checklists
-        let noChecklists = removedConceptsAndArchived.filter(item => item.checklists.length === 0);
+        let noChecklists = removedConceptsAndArchived.filter(item => item.checklists.length === 0).map(item=>{return {warningText: 'No Checklists - Excluded', cardName: item.name, cardUrl: item.shortUrl}});;
 
 
         let withChecklists = removedConceptsAndArchived.filter(item => item.checklists.length > 0);
@@ -84,6 +85,7 @@ function transformTrelloData(data) {
                 if (checklistName != 'Production Tasks' &&
                     checklistName != 'Service Tasks' &&
                     checklistName != 'Job Tasks' &&
+                    checklistName != 'Specification Tasks' &&
                     checklistName != 'QA Tasks') {
                     ignoreBadTaskListName = true;
 
@@ -107,11 +109,25 @@ function transformTrelloData(data) {
                     let parsedDesc = splitTaskDescription(checklistItemName);
                     console.log('parsedDesc', parsedDesc);
                     let taskNumber = parsedDesc.taskNumber;
+                    if (taskNumber == null) {
+                        taskWarnings.push({ warningText: `Task Number did not parse (${checklistName}) - Not processed`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
+                        taskFatalErrors = true;
+
+                    }
                     let taskDesc = parsedDesc.taskDesc
-                    //let extractedDashAmount = parsedDesc.amt; //extractReward(checklistItemName);
+                    if (taskDesc == null) {
+                        taskWarnings.push({ warningText: `Task Description did not parse (${checklistName}) - Not processed`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
+                        taskFatalErrors = true;
+
+                    }
                     //convert to USD 
                     //TODO: Use live rates
                     let dashAmountFloat = parsedDesc.taskRewardDash;
+                    if (dashAmountFloat == null) {
+                        taskWarnings.push({ warningText: `Task Amount did not parse (${checklistName}) - Not processed`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
+                        taskFatalErrors = true;
+
+                    }
                     let dashUSDAmount = null;
                     if (dashAmountFloat !== null) {
                         //dashAmountFloat = parseFloat(extractedDashAmount);
@@ -122,7 +138,7 @@ function transformTrelloData(data) {
 
                     //only bother adding if it doesn't have an assigned member
                     let checklistItemIdMember = checklistItem.idMember;
-                    if (checklistItemIdMember == null) {
+                    if (checklistItemIdMember != null) {
                         taskWarnings.push({ warningText: `Has an assigned member - Not shown`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
                         taskFatalErrors = true;
                     }
@@ -237,7 +253,14 @@ function splitTaskDescription(strTaskDescription) {
         let firstRBracket = strTaskDescription.indexOf(")");
 
         //task number
-        let taskNumber = strTaskDescription.substr(0, firstRBracket);
+        let taskNumber = null;
+
+        let parseTaskNum = strTaskDescription.substr(0, firstRBracket)
+        
+        if ($.isNumeric(parseTaskNum)) {
+            taskNumber= parseTaskNum;
+        }
+       
 
         //extracts Dash Reward amount from task description
         //get last parenthesised text
@@ -283,7 +306,7 @@ function splitTaskDescription(strTaskDescription) {
 
 }
 
-
+/*
 function extractReward(strTaskDescription) {
     //extracts Dash Reward amount from task description
     //get last parenthesised text
@@ -307,6 +330,7 @@ function extractReward(strTaskDescription) {
     }
 
 }
+*/
 
 function listToTable(tableId, projectHeaderName, data) {
     let strHTML = '';

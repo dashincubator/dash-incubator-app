@@ -15,12 +15,12 @@ layout: default-app
                         let lists = transformedData.lists;
                         let debug = transformedData.debug;
                         //debug admin data
-                        $('.data-concepts').text(debug.concepts);
+                        $('.data-concepts').html(warningsToTable(debug.concepts,'concepts'));
                         $('#total-concepts').text(debug.concepts.length);
-                        $('#data-archived').text(debug.archived);
+                        $('#data-archived').html(warningsToTable(debug.archived,'archived'));
                         $('#total-archived').text(debug.archived.length);
                         $('#cards-processed').text(debug.removedListsCount);
-                        $('#data-no-checklists').text(debug.noChecklists);
+                        $('#data-no-checklists').html(warningsToTable(debug.noChecklists,'no-checklists'));
                         $('#total-no-checklists').text(debug.noChecklists.length);
                         
                         $('#total-warnings').text(debug.warnings.cardWarnings.length + debug.warnings.taskWarnings.length);
