@@ -1,0 +1,50 @@
+---
+layout: default-app
+---
+
+
+<!-- handlebars template -->
+<script type='text/template' id='src'>
+    {% raw %}
+      {{#each cardObjects}}
+      <div class="output-container">
+        <div><h2>{{cardName}}</h2></div>
+        <div>{{{cardDesc}}}</div>
+        <div><a href="{{cardWebsite}}" target="_blank">{{cardWebsite}}</a></div>
+        <div><a href="{{cardSource}}" target="_blank">{{cardSource}}</a></div>  
+        </div>
+      {{/each}}
+
+    {% endraw %} 
+</script>
+<script>
+
+    $(document).ready(async function () {
+        //console.log('board id index', boardId);
+        $('#loading-data').show();
+
+        try {
+            let data = await getTrelloAllData();
+            $('#loading-data').hide();
+            let transformedData = transformTrelloData(data, { showAssignedTasks: true });
+            let cards = transformedData.cards;
+            cards.sort((a, b) => (a.cardRating > b.cardRating) ? -1 : 1)
+            console.dir(cards);
+
+
+            var source = $("#src").html();
+            var template = Handlebars.compile(source);
+            $("#output").append(template({ cardObjects: cards }));
+
+        }
+        catch (e) {
+            $('#loading-data').css("background-color", "red");
+            $('#loading-data').text(`There was an error loading the data: ${e}`);
+            $('#loading-data').show();
+        }
+
+    });
+</script>
+
+<div id="loading-data" style="display:none;">Loading data...</div>
+<div id="output"></div>

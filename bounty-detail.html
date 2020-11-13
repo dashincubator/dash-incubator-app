@@ -7,19 +7,19 @@ layout: default-app
 
         let detailsTemplate = `<table>
     <tr>
-        <td class="bounty-item-title">Project</td>
+        <td class="bounty-item-title" id="title-worktype"></td>
         <td>
-            <div id="bounty-info-project"></div>
+            <h2><div id="bounty-info-project"></div></h2>
         </td>
     </tr>
     <tr>
-        <td class="bounty-item-title">Project Description</td>
+        <td class="bounty-item-title" id="title-description"></td>
         <td>
             <div id="bounty-info-desc"></div>
         </td>
     </tr>
     <tr>
-        <td class="bounty-item-title">Task #</td>
+        <td class="bounty-item-title" id="title-tasknumber"></td>
         <td>
             <div id="bounty-info-tasknumber"></div>
         </td>
@@ -39,7 +39,13 @@ layout: default-app
     <tr>
         <td class="bounty-item-title">Work Type</td>
         <td>
-            <div id="bounty-info-worktype"></div>
+            <div id="bounty-info-cardWorkType"></div>
+        </td>
+    </tr>
+    <tr>
+        <td class="bounty-item-title">Task Type</td>
+        <td>
+            <div id="bounty-info-taskType"></div>
         </td>
     </tr>
     <tr>
@@ -81,22 +87,28 @@ layout: default-app
                 $('#bounty-details').append(detailsTemplate);
 
                 let task = foundTasks[0];
-
-                let workType = task.workType;
-                let taskNumber = task.taskNumber
-
+                let taskTypeTitle = task.taskType.substring(0,1)+task.taskType.substring(1,task.taskType.length).toLowerCase();
+                $('#title-tasknumber').append(`${taskTypeTitle} Task #`);
+                $('#title-worktype').append(task.cardWorkType || 'Project');
+                $('#title-description').append(task.cardWorkType || 'Project');
+                $('#title-description').append(' Description');
                 $('#bounty-info-project').append(task.cardName);
                 $('#bounty-info-name').append(task.taskDesc);
-                $('#bounty-info-tasknumber').append(taskNumber);
+                $('#bounty-info-tasknumber').append(task.taskNumber);
                 $('#bounty-info-desc').append(task.cardDesc);
-                $('#bounty-info-admin').append(task.admin);
-                $('#bounty-info-worktype').append(workType);
+                $('#bounty-info-admin').append(task.cardAdmin);
+                $('#bounty-info-cardWorkType').append(task.cardWorkType);
+                $('#bounty-info-taskType').append(taskTypeTitle);
                 $('#bounty-info-reward').append(task.rewardDash + ' DASH ($' + task.rewardUSD + ')');
-                $('#trello-instructions').prepend(`To request to reserve this ${workType} Task, add this comment on the trello card :<br>`);
-                $('#rules-explanation').append(`I want to reserve ${workType} Task #${taskNumber}`)
+                let cardActionVerb = (task.cardWorkType.toUpperCase()=="JOB" ? "claim" : "reserve");
+                
+                if(task.taskType=='PRODUCTION'){taskAdditonalWorkType= ` for this ${task.cardWorkType}`}
+                $('#trello-instructions').prepend(`To request to ${cardActionVerb} this ${taskTypeTitle} Task${taskAdditonalWorkType}, add this comment on the trello card :<br>`);
+                
+                $('#rules-explanation').append(`I want to ${cardActionVerb} ${taskTypeTitle} Task #${task.taskNumber}`)
                 var trellolink = task.cardUrl;
-                $('#bounty-info-trellolink').append('<a id="reserve-button" class="btn" href="' + trellolink + '">RESERVE BOUNTY</a>');
-                let strInfoLink = bountyDetailInfo(workType);
+                $('#bounty-info-trellolink').append(`<a id="reserve-button" class="btn" href="${trellolink}" target="_blank">${cardActionVerb.toUpperCase()} BOUNTY</a>`);
+                let strInfoLink = bountyDetailInfo(task.cardWorkType, task.taskType);
                 $('#rules-link').append(strInfoLink);
                 let encodedLink = encodeURIComponent(window.location.href);
                 console.log('encoded link', encodedLink);

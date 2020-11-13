@@ -2,12 +2,21 @@
 jQuery.support.cors = true;
 
 async function getTrelloAllData(args) {
-    let result;
+    let result = {};
 
     try {
-        result = await $.ajax({
+        result.cards = await $.ajax({
             type: "GET",
             url: `https://api.trello.com/1/board/${TRELLO_BOARD_ID}/cards?checklists=all&fields=id,name,idList,shortUrl,desc&customFieldItems=true&members=true&member_fields=username&key=${TRELLO_API_KEY}`,
+            data: "{}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            cache: false,
+        });
+
+        result.members = await $.ajax({
+            type: "GET",
+            url: `https://api.trello.com/1/board/${TRELLO_BOARD_ID}/members?key=${TRELLO_API_KEY}`,
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -21,7 +30,7 @@ async function getTrelloAllData(args) {
     }
 }
 
-function transformTrelloData(data) {
+function transformTrelloData(data, options = {}) {
     try {
         //got all card data
         //console.log('Got all card data:');
@@ -31,16 +40,19 @@ function transformTrelloData(data) {
         const listIdConcepts = TRELLO_LIST_ID_CONCEPTS;
         const listIdArchive = TRELLO_LIST_ID_ARCHIVE;
 
-        let concepts = data.filter(item => item.idList == listIdConcepts).map(item=>{return {warningText: 'Concepts List - Excluded', cardName: item.name, cardUrl: item.shortUrl}});
-        let archived = data.filter(item => item.idList == listIdArchive).map(item=>{return {warningText: 'Archived List - Excluded', cardName: item.name, cardUrl: item.shortUrl}});
+        let trelloCards = data.cards;
+        let trelloMembers = data.members;
+
+        let concepts = trelloCards.filter(item => item.idList == listIdConcepts).map(item => { return { warningText: 'Concepts List - Excluded', cardName: item.name, cardUrl: item.shortUrl } });
+        let archived = trelloCards.filter(item => item.idList == listIdArchive).map(item => { return { warningText: 'Archived List - Excluded', cardName: item.name, cardUrl: item.shortUrl } });
 
 
-        let removedConceptsAndArchived = data.filter(item => item.idList !== listIdConcepts && item.idList !== listIdArchive);
+        let removedConceptsAndArchived = trelloCards.filter(item => item.idList !== listIdConcepts && item.idList !== listIdArchive);
 
         let removedConceptsAndArchivedCount = removedConceptsAndArchived.length;
 
         //only get cards with checklists
-        let noChecklists = removedConceptsAndArchived.filter(item => item.checklists.length === 0).map(item=>{return {warningText: 'No Checklists - Excluded', cardName: item.name, cardUrl: item.shortUrl}});;
+        let noChecklists = removedConceptsAndArchived.filter(item => item.checklists.length === 0).map(item => { return { warningText: 'No Checklists - Excluded', cardName: item.name, cardUrl: item.shortUrl } });;
 
 
         let withChecklists = removedConceptsAndArchived.filter(item => item.checklists.length > 0);
@@ -48,16 +60,22 @@ function transformTrelloData(data) {
 
 
         //process checklist items into array of task objects
+        let cards = [];
         let tasks = [];
         let cardWarnings = [];
         let taskWarnings = [];
         withChecklists.map(card => {
-            console.log("processing...");
+            //console.log("processing...");
+            //TODO: remove unnecessary assignments
             let cardId = card.id;
             let cardName = card.name;
-            let cardDesc = card.desc;
-            let listId = card.idList;
+            let cardDesc = nl2br(card.desc);
+            let cardTrelloListId = card.idList;
             let cardUrl = card.shortUrl;
+
+
+
+
             let cardAdmin = null;
             if (card.members.length > 0) {
                 cardAdmin = card.members[0].username;
@@ -68,7 +86,7 @@ function transformTrelloData(data) {
             }
             let cardCustomFields = processCustomFields(card.customFieldItems);
 
-            if (cardCustomFields.workType == null) {
+            if (cardCustomFields.cardWorkType == null) {
                 cardWarnings.push({ warningText: 'No work type set', cardName: card.name, cardUrl: card.shortUrl });
             }
 
@@ -76,15 +94,57 @@ function transformTrelloData(data) {
                 cardWarnings.push({ warningText: 'No skills set', cardName: card.name, cardUrl: card.shortUrl });
             }
 
+            if (cardCustomFields.source == null) {
+                cardWarnings.push({ warningText: 'No source set', cardName: card.name, cardUrl: card.shortUrl });
+            }
+
+            if (cardCustomFields.website == null) {
+                cardWarnings.push({ warningText: 'No website set', cardName: card.name, cardUrl: card.shortUrl });
+            }
+
+            if (cardCustomFields.phase == null) {
+                cardWarnings.push({ warningText: 'No phase set', cardName: card.name, cardUrl: card.shortUrl });
+            }
+
+            if (cardCustomFields.LastPhase == null) {
+                cardWarnings.push({ warningText: 'No last phase set', cardName: card.name, cardUrl: card.shortUrl });
+            }
+
+            if (cardCustomFields.rating == null) {
+                cardWarnings.push({ warningText: 'No rating set', cardName: card.name, cardUrl: card.shortUrl });
+            }
+
+            if (cardCustomFields.paused == true) {
+                cardWarnings.push({ warningText: 'Card Marked as Paused', cardName: card.name, cardUrl: card.shortUrl });
+            }
+
+            if (cardCustomFields.completed == true) {
+                cardWarnings.push({ warningText: 'Card Marked as Completed', cardName: card.name, cardUrl: card.shortUrl });
+            }
+
+            if (cardCustomFields.meta == true) {
+                cardWarnings.push({ warningText: 'Card Marked as Meta', cardName: card.name, cardUrl: card.shortUrl });
+            }
+
+
+            let cardData = {
+                cardId, cardName, cardDesc, cardTrelloListId, cardUrl, cardAdmin,
+                cardWorkType: cardCustomFields.workType, cardSkills: cardCustomFields.skills, cardSource: cardCustomFields.source,
+                cardWebsite: cardCustomFields.website, cardPhase: cardCustomFields.phase, cardLastPhase: cardCustomFields.lastPhase,
+                cardRating: cardCustomFields.rating, cardPaused: cardCustomFields.paused, cardCompleted: cardCustomFields.completed, cardMeta: cardCustomFields.meta
+
+            };
+            let cardTasks = [];
+
+
 
 
             card.checklists.map(checklist => {
                 let ignoreBadTaskListName;
                 let checklistName = checklist.name;
+                let taskType = checklist.name.split(" ")[0].toUpperCase()
                 //We don't need Concept Tasks
                 if (checklistName != 'Production Tasks' &&
-                    checklistName != 'Service Tasks' &&
-                    checklistName != 'Job Tasks' &&
                     checklistName != 'Specification Tasks' &&
                     checklistName != 'QA Tasks') {
                     ignoreBadTaskListName = true;
@@ -92,7 +152,7 @@ function transformTrelloData(data) {
                 }
                 checklist.checkItems.map(checklistItem => {
 
-                    
+
 
                     let taskFatalErrors;
 
@@ -107,14 +167,14 @@ function transformTrelloData(data) {
 
 
                     let parsedDesc = splitTaskDescription(checklistItemName);
-                    console.log('parsedDesc', parsedDesc);
+                    //console.log('parsedDesc', parsedDesc);
                     let taskNumber = parsedDesc.taskNumber;
                     if (taskNumber == null) {
                         taskWarnings.push({ warningText: `Task Number did not parse (${checklistName}) - Not processed`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
                         taskFatalErrors = true;
 
                     }
-                    let taskDesc = parsedDesc.taskDesc
+                    let taskDesc = nl2br(parsedDesc.taskDesc)
                     if (taskDesc == null) {
                         taskWarnings.push({ warningText: `Task Description did not parse (${checklistName}) - Not processed`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
                         taskFatalErrors = true;
@@ -122,30 +182,69 @@ function transformTrelloData(data) {
                     }
                     //convert to USD 
                     //TODO: Use live rates
-                    let dashAmountFloat = parsedDesc.taskRewardDash;
-                    if (dashAmountFloat == null) {
+                    let rewardDash = parsedDesc.taskRewardDash;
+                    if (rewardDash == null) {
                         taskWarnings.push({ warningText: `Task Amount did not parse (${checklistName}) - Not processed`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
                         taskFatalErrors = true;
 
                     }
-                    let dashUSDAmount = null;
-                    if (dashAmountFloat !== null) {
+                    let rewardUSD = null;
+                    if (rewardDash !== null) {
                         //dashAmountFloat = parseFloat(extractedDashAmount);
                         //TODO error handling
-                        dashUSDAmount = dashAmountFloat * DASHUSD;
+                        rewardUSD = rewardDash * DASHUSD;
                     }
+
+                    //?filter completed tasks
+                    let taskComplete = (checklistItem.state == "complete" ? true : false);
+                    if (taskComplete) {
+                        if (!options.showCompletedTasks) {
+                            taskWarnings.push({ warningText: `Task is completed - Not shown`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
+                            taskFatalErrors = true;
+                        }
+                    }
+
+
+                    //?filter overdue tasks
+                    let taskDue = checklistItem.due;
+
+
 
 
                     //only bother adding if it doesn't have an assigned member
-                    let checklistItemIdMember = checklistItem.idMember;
-                    if (checklistItemIdMember != null) {
-                        taskWarnings.push({ warningText: `Has an assigned member - Not shown`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
-                        taskFatalErrors = true;
+                    let taskAssignedId = checklistItem.idMember;
+                    let taskAssignedUsername = null;
+                    if (taskAssignedId != null) {
+                        taskAssignedUsername = data.members.filter(name => name.id == taskAssignedId)[0].username || null;
+                        if (!options.showAssignedTasks) {
+                            taskWarnings.push({ warningText: `Has an assigned member - Not shown`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
+                            taskFatalErrors = true;
+                        }
                     }
 
-                    if(taskFatalErrors){return;}
+                    //Don't show tasks from paused bounty cards
+                    if (cardData.cardPaused) {
+                        if (!options.showPausedBountyTasks) {
+                            taskWarnings.push({ warningText: `The card status is paused - Task Not shown`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
+                            taskFatalErrors = true;
+                        }
+                    }
 
-                    tasks.push({ taskId: taskId, taskNumber: taskNumber, cardId: cardId, cardName: cardName, cardDesc: cardDesc, listId: listId, cardUrl: cardUrl, admin: cardAdmin, workType: cardCustomFields.workType, cardSkills: cardCustomFields.skills, checklistName: checklistName, checklistItemName: checklistItemName, taskDesc: taskDesc, rewardDash: dashAmountFloat, rewardUSD: dashUSDAmount });
+
+
+
+                    if (taskFatalErrors) { return; }
+
+                    let taskData = { taskId, taskNumber, checklistName, taskType, checklistItemName, taskDesc, rewardDash, rewardUSD, taskAssignedId, taskAssignedUsername, taskDue, taskComplete }
+
+
+
+
+                    //flat task data
+                    tasks.push({ ...cardData, ...taskData });
+
+                    //add to nested card tasks
+                    cardTasks.push(taskData);
 
                 })
                 //}
@@ -157,10 +256,14 @@ function transformTrelloData(data) {
 
             })
 
+            //nested card data
+            //console.log('CARD DATA', cardData);
+            cards.push({ ...cardData, cardTasks });
+
         })
 
-        console.log('all Tasks:');
-        console.dir(tasks);
+        //console.log('all Tasks:');
+        //console.dir(tasks);
 
         let totalTasks = tasks.length;
         console.log('total tasks:', totalTasks)
@@ -168,24 +271,25 @@ function transformTrelloData(data) {
         //filter tasks to lists
         let lists = {}
 
-        lists.project = tasks.filter(item => item.checklistName == 'Production Tasks' && item.workType == 'Project');
-        lists.spec = tasks.filter(item => item.checklistName == 'Specification Tasks');
-        lists.service = tasks.filter(item => item.checklistName == 'Production Tasks' && item.workType == 'Service');
-        lists.job = tasks.filter(item => item.checklistName == 'Production Tasks' && item.workType == 'Job');
-        lists.qa = tasks.filter(item => item.checklistName == 'QA Tasks');
+        lists.project = tasks.filter(item => item.taskType == 'PRODUCTION' && item.cardWorkType == 'Project');
+        lists.spec = tasks.filter(item => item.taskType == 'SPECIFICATION');
+        lists.service = tasks.filter(item => item.taskType == 'PRODUCTION' && item.cardWorkType == 'Service');
+        lists.job = tasks.filter(item => item.taskType == 'PRODUCTION' && item.cardWorkType == 'Job');
+        lists.qa = tasks.filter(item => item.taskType == 'QA');
 
 
-        console.log('Lists:');
-        console.dir(lists);
+        //console.log('Lists:');
+        //console.dir(lists);
 
         return {
-            lists: lists,
+            lists,
+            cards,
             debug: {
-                concepts: concepts,
-                archived: archived,
+                concepts,
+                archived,
                 removedListsCount: removedConceptsAndArchivedCount,
-                noChecklists: noChecklists,
-                warnings: { cardWarnings: cardWarnings, taskWarnings: taskWarnings }
+                noChecklists,
+                warnings: { cardWarnings, taskWarnings }
 
             }
         };
@@ -202,27 +306,22 @@ function transformTrelloData(data) {
 function processCustomFields(arrCustomFields) {
     //accepts an array of custom fields from card data
     //returns an object containing Work Type & Skills
-    //constants for custom fields
-    const customFieldWorkTypeId = TRELLO_CUSTOM_ID_WORKTYPE;
-    const customFieldWorkTypeValueProject = TRELLO_CUSTOM_VALUE_WORKTYPE_PROJECT;
-    const customFieldWorkTypeValueService = TRELLO_CUSTOM_VALUE_WORKTYPE_SERVICE;
-    const customFieldWorkTypeValueJob = TRELLO_CUSTOM_VALUE_WORKTYPE_JOB;
-
-    const customFieldSkillsId = TRELLO_CUSTOM_ID_SKILLS;
+    //global constants for custom fields
+    //TODO - get a more effecient way to do this..!
 
     let customFields = {};
 
-    //get workType
-    arrCustomFields.filter(field => field.idCustomField == customFieldWorkTypeId)
+    //get cardWorkType
+    arrCustomFields.filter(field => field.idCustomField == TRELLO_CUSTOM_ID_WORKTYPE)
         .map(value => {
             switch (value.idValue) {
-                case customFieldWorkTypeValueProject:
+                case TRELLO_CUSTOM_VALUE_WORKTYPE_PROJECT:
                     customFields.workType = 'Project'
                     break;
-                case customFieldWorkTypeValueService:
+                case TRELLO_CUSTOM_VALUE_WORKTYPE_SERVICE:
                     customFields.workType = 'Service'
                     break;
-                case customFieldWorkTypeValueJob:
+                case TRELLO_CUSTOM_VALUE_WORKTYPE_JOB:
                     customFields.workType = 'Job'
                     break;
                 default: customFields.workType = null;
@@ -230,8 +329,7 @@ function processCustomFields(arrCustomFields) {
         });
 
     //get Skills
-
-    filterSkills = arrCustomFields.filter(field => field.idCustomField == customFieldSkillsId)
+    filterSkills = arrCustomFields.filter(field => field.idCustomField == TRELLO_CUSTOM_ID_SKILLS)
     if (filterSkills.length > 0) {
         filterSkills.map(value => {
             customFields.skills = value.value.text;
@@ -240,6 +338,97 @@ function processCustomFields(arrCustomFields) {
     else {
         customFields.skills = null;
     }
+
+    //get Phase
+    filterPhase = arrCustomFields.filter(field => field.idCustomField == TRELLO_CUSTOM_ID_PHASE)
+    if (filterPhase.length > 0) {
+        filterPhase.map(value => {
+            customFields.phase = value.value.number;
+        });
+    }
+    else {
+        customFields.phase = null;
+    }
+
+    //get Last Phase
+    filterLastPhase = arrCustomFields.filter(field => field.idCustomField == TRELLO_CUSTOM_ID_LAST_PHASE)
+    if (filterLastPhase.length > 0) {
+        filterLastPhase.map(value => {
+            customFields.lastPhase = value.value.number;
+        });
+    }
+    else {
+        customFields.lastPhase = null;
+    }
+
+    //get Rating
+    filterRating = arrCustomFields.filter(field => field.idCustomField == TRELLO_CUSTOM_ID_RATING)
+    if (filterRating.length > 0) {
+        filterRating.map(value => {
+            customFields.rating = parseFloat(value.value.number);
+        });
+    }
+    else {
+        customFields.rating = 0;
+    }
+
+    //get Source
+    filterSource = arrCustomFields.filter(field => field.idCustomField == TRELLO_CUSTOM_ID_SOURCE)
+    if (filterSource.length > 0) {
+        filterSource.map(value => {
+            customFields.source = value.value.text;
+        });
+    }
+    else {
+        customFields.source = null;
+    }
+
+    //get Website
+    filterWebsite = arrCustomFields.filter(field => field.idCustomField == TRELLO_CUSTOM_ID_WEBSITE)
+    if (filterWebsite.length > 0) {
+        filterWebsite.map(value => {
+            customFields.website = value.value.text;
+        });
+    }
+    else {
+        customFields.website = null;
+    }
+
+    //get Completed
+    filterCompleted = arrCustomFields.filter(field => field.idCustomField == TRELLO_CUSTOM_ID_COMPLETED)
+    if (filterCompleted.length > 0) {
+        filterCompleted.map(value => {
+            console.log('BOUNTy COMPLETE?', value.value.checked)
+            customFields.completed = value.value.checked == "true";
+
+        });
+    }
+    else {
+        customFields.completed = false;
+    }
+
+    //get Paused
+    filterPaused = arrCustomFields.filter(field => field.idCustomField == TRELLO_CUSTOM_ID_PAUSED)
+    if (filterPaused.length > 0) {
+        filterPaused.map(value => {
+            customFields.paused = value.value.checked == "true"
+        });
+    }
+    else {
+        customFields.paused = false;
+    }
+
+    //get Meta
+    filterMeta = arrCustomFields.filter(field => field.idCustomField == TRELLO_CUSTOM_ID_META)
+    if (filterMeta.length > 0) {
+        filterMeta.map(value => {
+            customFields.meta = value.value.checked == "true";
+        });
+    }
+    else {
+        customFields.meta = false;
+    }
+
     return customFields;
 
 }
@@ -256,11 +445,11 @@ function splitTaskDescription(strTaskDescription) {
         let taskNumber = null;
 
         let parseTaskNum = strTaskDescription.substr(0, firstRBracket)
-        
+
         if ($.isNumeric(parseTaskNum)) {
-            taskNumber= parseTaskNum;
+            taskNumber = parseTaskNum;
         }
-       
+
 
         //extracts Dash Reward amount from task description
         //get last parenthesised text
@@ -306,31 +495,6 @@ function splitTaskDescription(strTaskDescription) {
 
 }
 
-/*
-function extractReward(strTaskDescription) {
-    //extracts Dash Reward amount from task description
-    //get last parenthesised text
-    let lastLBracket = strTaskDescription.lastIndexOf("(");
-    //console.log('lastLBracket',lastLBracket);
-    let lastRBracket = strTaskDescription.lastIndexOf(")");
-    //console.log('lastRBracket',lastRBracket);
-    let lastBracketContent = strTaskDescription.substr(lastLBracket + 1, lastRBracket - lastLBracket - 1).trim().toUpperCase();
-    //console.log('lastBracketContent',lastBracketContent);
-    let posOfTextDash = lastBracketContent.indexOf("DASH");
-    //console.log('posOfTextDash',posOfTextDash);
-    let amountStr = lastBracketContent.substr(0, posOfTextDash).trim()
-    //console.log('amountStr',amountStr);
-    // TODO: $.isNumeric is DEPRECATED!
-    // replace with pure JS implementation
-    if ($.isNumeric(amountStr)) {
-        return amountStr;
-    }
-    else {
-        return null;
-    }
-
-}
-*/
 
 function listToTable(tableId, projectHeaderName, data) {
     let strHTML = '';
@@ -353,7 +517,7 @@ function listToTable(tableId, projectHeaderName, data) {
                     <tbody>
     `
     data.map(item => {
-        //let link = `./bounty-detail.html?bountytaskid=${item.taskId}&bountytrellourl=${item.cardUrl}&bountyname=${item.checklistItemName}&bountycardname=${item.cardName}&bountycarddesc=${item.cardDesc}&bountyrewardusd=${item.rewardUSD}&bountyrewarddash=${item.rewardDash}&bountyadmin=${item.admin}&bountyworktype=${item.workType}`;
+        //let link = `./bounty-detail.html?bountytaskid=${item.taskId}&bountytrellourl=${item.cardUrl}&bountyname=${item.checklistItemName}&bountycardname=${item.cardName}&bountycarddesc=${item.cardDesc}&bountyrewardusd=${item.rewardUSD}&bountyrewarddash=${item.rewardDash}&bountyadmin=${item.admin}&bountycardWorkType=${item.cardWorkType}`;
         let link = `./bounty-detail.html?taskid=${item.taskId}`;
         strHTML += `<tr><td><div>${item.cardName}</div></td><td><div>${item.taskNumber}</div></td><td><div>${item.taskDesc}</div></td><td><div>${item.cardSkills || ''}</div></td><td><div><a href="${link}" class="btn">${item.rewardDash} DASH ($${item.rewardUSD})</a></div></td></tr>`;
     });
@@ -384,37 +548,44 @@ function getTaskById(data, taskId) {
     return taskData
 }
 
-function bountyDetailInfo(workType) {
-    //chnage link to rules depending on worktype
+function bountyDetailInfo(cardWorkType, taskType) {
+    //chnage link to rules depending on cardWorkType
     let reservingAnchor = '221-reserving-a-task';
     let rulesAnchor = '';
     let linkText = '<a href="rules.html">Find out more about tasks</a>';
-    switch (workType.toUpperCase()) {
+    switch (taskType.toUpperCase()) {
         case 'SPEC':
             rulesAnchor = '32-specifications';
             linkText = `<a href="rules.html#${rulesAnchor}">creating specifications.</a>`;
             break;
-        case 'PROJECT':
-            rulesAnchor = '33-projects';
-            linkText = `<a href="rules.html#${rulesAnchor}">and completing project tasks.</a>`;
-            break;
-        case 'SERVICE':
-            rulesAnchor = '34-services';
-            linkText = `<a href="rules.html#${rulesAnchor}">and completing service tasks.</a>`;
-            break;
-        case 'JOB':
-            rulesAnchor = '35-jobs';
-            linkText = `<a href="rules.html#${rulesAnchor}">and completing job tasks.</a>`;
-            break;
         case 'QA':
             rulesAnchor = '36-qa';
-            linkText = `<a href="rules.html#${rulesAnchor}">and completing QA tasks.</a>`;
+            linkText = `and <a href="rules.html#${rulesAnchor}">completing QA tasks.</a>`;
             break;
+        case 'PRODUCTION':
+            switch (cardWorkType.toUpperCase()) {
+                case 'PROJECT':
+                    rulesAnchor = '33-projects';
+                    linkText = `and <a href="rules.html#${rulesAnchor}">completing project tasks.</a>`;
+                    break;
+                case 'SERVICE':
+                    rulesAnchor = '34-services';
+                    linkText = `and <a href="rules.html#${rulesAnchor}">completing service tasks.</a>`;
+                    break;
+                case 'JOB':
+                    rulesAnchor = '35-jobs';
+                    linkText = `and <a href="rules.html#${rulesAnchor}">completing job tasks.</a>`;
+                    break;
 
-
+            }
     }
-
-    let strInfoLink = `Learn more about <a href="rules.html#${reservingAnchor}">reserving tasks</a> and ${linkText}`
+    let strInfoLink;
+    if (cardWorkType.toUpperCase() == 'JOB') {
+        strInfoLink = `Learn more about ${linkText}`
+    }
+    else {
+        strInfoLink = `Learn more about <a href="rules.html#${reservingAnchor}">reserving tasks</a> ${linkText}`
+    }
     return strInfoLink;
 }
 
@@ -429,8 +600,8 @@ function warningsToTable(data, type) {
                             <th>
                                 Card
                             </th>`
-    if(type=='task'){
-    strHTML += `
+    if (type == 'task') {
+        strHTML += `
                             <th>
                                 Task Description
                             </th>`
@@ -439,10 +610,10 @@ function warningsToTable(data, type) {
                         </tr>
                     </thead>
                     <tbody>`
-    
+
     data.map(item => {
         strHTML += `<tr><td>${item.warningText}</td><td><a href="${item.cardUrl}" target="_blank">${item.cardName}</a></td>`;
-        if(type=='task'){
+        if (type == 'task') {
             strHTML += `<td>${item.taskDesc}</td>`;
         }
         strHTML += '</tr>'
@@ -455,3 +626,8 @@ function warningsToTable(data, type) {
     return strHTML;
 
 }
+
+
+function nl2br(str){
+    return str.replace(/(?:\r\n|\r|\n)/g, '<br>');
+   }
