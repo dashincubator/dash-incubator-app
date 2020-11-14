@@ -1,3 +1,6 @@
+---
+layout: default-rules
+---
 View [PROTOCOL HISTORY](https://github.com/dashincubator/dash-incubator-app/commits/master/rules.md)
 
 # Dash Incubator Protocol V 0.1
