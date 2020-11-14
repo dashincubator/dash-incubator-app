@@ -1,3 +1,6 @@
+---
+layout: default-rules
+---
 View [PROTOCOL HISTORY](https://github.com/dashincubator/dash-incubator-app/commits/master/rules.md)
 
 # Dash Incubator Protocol V 0.1
@@ -6,23 +9,23 @@ This document is a protocol that defines the structure and operations of the [Da
 
 # Contents
 
-  1. [Introduction](#1-Introduction)
-2. [Bounty System](#2-Bounty-System)
-3. [Output](#3-Output)
-4. [Admins](#4-Admins)
-5. [Funding](#5-Funding)
-6. [Resources](#6-Resources)
-7. [Roadmap](#7-Roadmap)
+  1. [Introduction](#1-introduction)
+2. [Bounty System](#2-bounty-system)
+3. [Output](#3-output)
+4. [Admins](#4-admins)
+5. [Funding](#5-funding)
+6. [Resources](#6-resources)
+7. [Roadmap](#7-roadmap)
 
 # 1 Introduction
 
 ## 1.1 Overview
 
-[Dash Incubator App](#) is a blockchain-funded App that incentivizes users to produce valuable output for Dash in the form of Bounties that reward users for completing Tasks.
+[Dash Incubator App](https://dashincubator.app) is a blockchain-funded App that incentivizes users to produce valuable output for Dash in the form of Bounties that reward users for completing Tasks.
 
 Each Bounty’s work is divided into Tasks which have an agreed reward, the output of which is tracked in the App (such as a specification document, a Github commit, or a KPI such as % uptime on a website that can prove the value of the work completed).
 
-The App defines a [Bounty System](#) that operates like a pipeline where Bounties enter the pipeline as Concepts that progress through Specification and Production stages until all tasks are finished and all work on the bounty is completed.
+The App defines a [Bounty System](#2-bounty-system) that operates like a pipeline where Bounties enter the pipeline as Concepts that progress through Specification and Production stages until all tasks are finished and all work on the bounty is completed.
 
 A Bounty is categorized at the Concept stage as one of three types::
 
@@ -32,9 +35,9 @@ A Bounty is categorized at the Concept stage as one of three types::
 
 When users finish Tasks, they can make a claim for the Task Reward.
 
-Task Claims are assessed by [Bounty Admins](#), who are the users who define and manage Tasks in Bounties.  Once a claim is approved by an Admin, the Task’s reward will be awarded to the user with a Dash transaction.
+Task Claims are assessed by [Bounty Admins](#4-admins), who are the users who define and manage Tasks in Bounties.  Once a claim is approved by an Admin, the Task’s reward will be awarded to the user with a Dash transaction.
 
-The App is funded from a series of [Proposals](#) submitted to the Dash Network on a quarterly basis, with all spending from the fund tracked within the Bounty System itself.
+The App is funded from a series of [Proposals](#5-funding) submitted to the Dash Network on a quarterly basis, with all spending from the fund tracked within the Bounty System itself.
 
 All work is incentivized, from providing ideas, code and promotion, to quality assurance, technical writing or improving the Incubator app itself.   
 
@@ -44,7 +47,7 @@ The App is currently delivered as a frontend website that uses an open Trello bo
 
 ## 1.2 Motivation
 
-The Incubator was created in February of 2020 from a [blockchain proposal](#) to provide incentives for developers to build on Dash’s forthcoming protocol upgrade (codenamed Evolution).
+The Incubator was created in February of 2020 from a [blockchain proposal](https://www.dashcentral.org/p/dash-platform-incubator) to provide incentives for developers to build on Dash’s forthcoming protocol upgrade (codenamed Evolution).
 
 The Incubator maximizes value to the Dash network by minimizing management and decentralizing, automating, and incentivizing as much as possible.
 
@@ -100,11 +103,11 @@ The Incubator doesn't own any assets, including any rights to any Task output,  
 
 All data and interaction in the App is in the public domain, apart from any user authentication credentials.  
 
-All output from Tasks procured by the fund must be open-source and licensed under [MIT license](#), except for cases where proprietary resources are being used, which must be pre approved by an Admin before such Tasks can be claimed.
+All output from Tasks procured by the fund must be open-source and licensed under [MIT license](https://opensource.org/licenses/MIT), except for cases where proprietary resources are being used, which must be pre approved by an Admin before such Tasks can be claimed.
 
 ## 1.7 Proposal Funding
 
-Funding for the Incubator comes from Dash Network [Proposals](#), voted on by the Masternode Network and awarded at each Superblock to the proposal’s address.
+Funding for the Incubator comes from Dash Network [Proposals](#5-funding), voted on by the Masternode Network and awarded at each Superblock to the proposal’s address.
 
 Admins add approved claims in the [Claim Awards List](#) which get awarded via a Dash transaction from the Fund wallet. Every payment from the fund’s Wallet must be listed in the Claim Awards List and therefore relate back to a Trello card so that all accounting and payments are tracked and publicly auditable in a single unmixed address history.
 
@@ -199,16 +202,16 @@ Meta bounties allow easy segregation of Tasks that are needed in providing the I
 
 ## 2.3 Bounty Tasks
 
-Bounty work is broken up into Tasks, which are individual pieces of work that users can complete to earn a reward, using a [Claims process](#).
+Bounty work is broken up into Tasks, which are individual pieces of work that users can complete to earn a reward, using a [Claims process](#234-claiming-a-reward).
 
-Each Task must produce some quantifiable Output that’s tracked with the Task’s Claim (a document, commit, etc), with special users called [Admins](#) who are incentivized to assess and approve claims or work to resolve issues.
+Each Task must produce some quantifiable Output that’s tracked with the Task’s Claim (a document, commit, etc), with special users called [Admins](#4-admins) who are incentivized to assess and approve claims or work to resolve issues.
 
 There are four types of Task available in any Bounty:
 
-*   [Concept Tasks](#) - work related to newly created Bounties at the Concept stage
-*   [Production Tasks](#) - work related to Tasks required to complete Project, Service and Job bounties
-*   [Specification Tasks](#) - work that provides the detail necessary to define Production Tasks
-*   [QA Tasks](#) - work that assures the quality of Production Tasks
+*   [Concept Tasks](#31-concepts) - work related to newly created Bounties at the Concept stage
+*   [Production Tasks](#33-projects) - work related to Tasks required to complete Project, Service and Job bounties
+*   [Specification Tasks](#32-specifications) - work that provides the detail necessary to define Production Tasks
+*   [QA Tasks](#36-qa) - work that assures the quality of Production Tasks
 
 > Each of the four Task types are represented as named Checklists on the Bounty’s Trello Card.
 
@@ -322,9 +325,9 @@ Once the task is finished, the Member can claim the reward for the task by leavi
 
 Reserving a Task means you have exclusive rights to complete it and make a Claim for the reward upto and including the Due Date.
 
-You need to first join as a member of the Trello board to reserve Tasks, which you can do using the [Invite Link](#).
+You need to first join as a member of the Trello board to reserve Tasks, which you can do using the [Invite Link](https://trello.com/invite/b/FPJzDcok/d63ef1ba39c74163866ec14ef3ec5c6e/dash-bounty-board).
 
-To reserve a [Task](#) write a comment on the card in Trello referencing the Checklist the task is in and the numbers you want to reserve, e.g. 
+To reserve a [Task](#23-bounty-tasks) write a comment on the card in Trello referencing the Checklist the task is in and the numbers you want to reserve, e.g. 
 
 ```i want to reserve Production Tasks 1-3```
 
@@ -350,7 +353,7 @@ Your claim will then be processed by an admin.
 
 An Admin will process new claims, assessing them based on the rules for the type of output you’ve produced and whether the work finishes the Task adequately as it was defined.
 
-If the Admin approves the claim, they’ll leave a [Claim Approved comment](#) on the Trello Card, otherwise they may discuss any issues directly on the card comments with you.  Approved claims will be awarded usually within 7 days and will be listed in the [Claim Awards List](#).
+If the Admin approves the claim, they’ll leave a [Claim Approved comment](#435-task-claims) on the Trello Card, otherwise they may discuss any issues directly on the card comments with you.  Approved claims will be awarded usually within 7 days and will be listed in the [Claim Awards List](#).
 
 ## 2.5 Price List
 
@@ -433,11 +436,11 @@ Concepts are new Bounties proposed by users in the App and are stored in the Con
 
 Users receive a reward if the Concept is approved and subsequently enters Production (the Card is moved to either the Projects, Services, or Jobs Lists).
 
-Bounties at the Concept stage require specific info from a user to enable [Admins](#) to approve them and move them to the Specification stage.
+Bounties at the Concept stage require specific info from a user to enable [Admins](#4-admins) to approve them and move them to the Specification stage.
 
 Concepts are value propositions that both define how some idea would work and what problems it would solve, and a [New Concept Template](#) is provided as a guideline for the kind of info Admins want to assess new Concepts. 
 
-Admins should approve any Concept that is clearly defined, within budget and inline with the current Incubator [Strategy](#).
+Admins should approve any Concept that is clearly defined, within budget and inline with the current Incubator [Strategy](#14-strategy).
 
 The user who creates a Concept has 24hrs of exclusive privilege to request to reserve the corresponding Specification Tasks once the Bounty is moved to the Specification List, after which time it is open to anyone.
 
@@ -455,11 +458,11 @@ To propose a new Concept:
 1. Fill in the info detailed in the [New Concept Template](#) document.  
 2. Add a comment on the [New Concept Card](#) on the Trello Board, linking the template you’ve created.
 
-Admins will then review your concept, and if it satisfies the [Concept requirements](#) it will be added as a new card in the Concepts list on Trello.  
+Admins will then review your concept, and if it satisfies the [Concept requirements](#31-concepts) it will be added as a new card in the Concepts list on Trello.  
 
-An admin may ask you to expand on or amend some of the info in the template doc you posted.  The admin will also reserve the task for you, so that you can claim a Concept Reward if the concept completes the [specification](#) stage.
+An admin may ask you to expand on or amend some of the info in the template doc you posted.  The admin will also reserve the task for you, so that you can claim a Concept Reward if the concept completes the [specification](#32-specifications) stage.
 
-Concepts provide fixed rewards as specified in the [Price List](#). 
+Concepts provide fixed rewards as specified in the [Price List](#25-price-list). 
 
 ### 3.1.2 Claiming a Concept Task Reward
 
@@ -471,7 +474,7 @@ A Specification is a detailed definition of the work that needs to be completed 
 
 Bounties can be moved to the Specification stage (represented by their Card being in the Specifications list on Trello) meaning they need to have work specified before some production tasks can be finished.
 
-Producing a Specification involves taking an approved [Concept](#) and defining the criteria (such as features) that then allows a user to implement the concept.
+Producing a Specification involves taking an approved [Concept](#31-concepts) and defining the criteria (such as features) that then allows a user to implement the concept.
 
 Admins measure the quality of the Specification in terms of its fitness for purpose, adequate detail level to determine Production Tasks to implement it.
 
@@ -481,11 +484,11 @@ A [Specification Template](#) is provided as guidance but Admins can decide exac
 
 #### 3.2.1 Reserving a Specification Task
 
-Unassigned Specification tasks can be found on the [Trello Board](#) and listed in the [Incubator App](#).  Follow the [Reservations](#) process to reserve a specification task.
+Unassigned Specification tasks can be found on the [Trello Board](https://trello.com/b/FPJzDcok/dash-bounty-board) and listed in the [Incubator App](https://dashincubator.app/).  Follow the [Reservations](#233-reserving-a-task) process to reserve a specification task.
 
 #### 3.2.2 Claiming a Specification Task Reward
 
-Once a specification task is finished you can claim a reward for the work that will then be assessed by an Admin by following the [Claims Process](#).
+Once a specification task is finished you can claim a reward for the work that will then be assessed by an Admin by following the [Claims Process](#234-claiming-a-reward).
 
 ## 3.3 Projects
 
@@ -503,11 +506,11 @@ Producers can ask Admins to add a certain task or help them to create the task d
 
 ### 3.3.2 Reserving a Project Task
 
-Unassigned Project tasks are found on the [Trello Board](#) and listed on the [Incubator website](#).  Follow the [Reservations](#) process to reserve a project task.
+Unassigned Project tasks can be found on the [Trello Board](https://trello.com/b/FPJzDcok/dash-bounty-board) and listed in the [Incubator App](https://dashincubator.app/).  Follow the [Reservations](#233-reserving-a-task) process to reserve a project task.
 
 ### 3.3.3 Claiming a Project Task Reward
 
-Once a project task is finished you can claim a reward for the work that will then be assessed by an Admin by following the [Claims process](#).
+Once a project task is finished you can claim a reward for the work that will then be assessed by an Admin by following the [Claims process](#234-claiming-a-reward).
 
 ## 3.4 Services
 
@@ -517,11 +520,12 @@ Service Tasks appear in the Project Tasks checklist on the Trello card of the Bo
 
 ### 3.4.1 Reserving a Service Task
 
-Unassigned Service tasks are found on the [Trello Board](#) and listed on the [Incubator website](#).  Follow the [Reservations](#) process to reserve a project task.
+Unassigned Service tasks can be found on the [Trello Board](https://trello.com/b/FPJzDcok/dash-bounty-board) and listed in the [Incubator App](https://dashincubator.app/).  Follow the [Reservations](#233-reserving-a-task) process to reserve a service task.
 
 ### 3.4.2 Claiming a Service Task Reward
 
-Once a service task is finished you can claim a reward for the work that will then be assessed by an Admin by following the [Claims process](#).
+
+Once a service task is finished you can claim a reward for the work that will then be assessed by an Admin by following the [Claims process](#234-claiming-a-reward).
 
 ## 3.5 Jobs
 
@@ -529,7 +533,7 @@ Jobs are on-off Bounties with singular Production Tasks that can be claimed at a
 
 ### 3.5.1 Claiming a Job Task Reward
 
-Jobs are found on the [Trello Board](#) and the [Incubator website](#). Follow the [Claims](#) process to reserve a project task.
+Jobs are found on the [Trello Board](https://trello.com/b/FPJzDcok/dash-bounty-board) and the [Incubator website](https://dashincubator.app/). Follow the [Claims](#234-claiming-a-reward) process to reserve a project task.
 
 ## 3.6 QA
 
@@ -537,11 +541,11 @@ Quality Assurance tasks validate Production Tasks (Project, Service or Job),each
 
 ### 3.6.1 Reserving a Service Task
 
-Unassigned QA tasks can be found on the [Trello Board](#) and listed on the [Incubator website](#). Follow the [Reservations](#) process to reserve a QA task.
+Unassigned QA tasks can be found on the [Trello Board](https://trello.com/b/FPJzDcok/dash-bounty-board) and listed in the [Incubator App](https://dashincubator.app/).  Follow the [Reservations](#233-reserving-a-task) process to reserve a QA task.
 
 ### 3.6.2 Claiming a Service Task Reward
 
-Once a QA task is finished you can claim a reward for the work that will then be assessed by an Admin by following the [Claims Process](#).
+Once a QA task is finished you can claim a reward for the work that will then be assessed by an Admin by following the [Claims Process](#234-claiming-a-reward).
 
 # 4 Admins
 
@@ -549,7 +553,7 @@ This section relates to the special Admin role and rules on how they operate.
 
 Admins work to facilitate the production of output and regulate the operations of the fund itself.
 
-Admins earn rewards in the form of a % commission added to the value of the Tasks on Bounties that they manage, as defined in the [Price List](#). 
+Admins earn rewards in the form of a % commission added to the value of the Tasks on Bounties that they manage, as defined in the [Price List](#25-price-list). 
 
 This is to incentivize ownership of the Tasks in terms of defining them, promoting them and supporting the work involved in their completion.  
 
@@ -571,7 +575,7 @@ Currently Admins are appointed by the Incubator’s Proposal Owner on Dash who i
 
 Admins are configured as Members of the Trello Board, who are the only users who can change data on the board.  Public users can’t change anything on the board apart from adding comments on cards.  
 
-Public users who want to complete Tasks need to first join the Trello board as an observer using the [Invite Link](#).
+Public users who want to complete Tasks need to first join the Trello board as an observer using the [Invite Link](https://trello.com/invite/b/FPJzDcok/d63ef1ba39c74163866ec14ef3ec5c6e/dash-bounty-board).
 
 ## 4.2 Bounty Admin
 
@@ -638,13 +642,13 @@ For example:
 
 ```1) QA: Production Tasks (1,2) using [spec section 5](#) (0.1 Dash)```
 
-QA Rewards are set as a % added to the relevant Task the QA refers to, defined in the [Price List](#).
+QA Rewards are set as a % added to the relevant Task the QA refers to, defined in the [Price List](#25-price-list).
 
 QA Tasks claims should be requested by users and processed by Admins like regular Production tasks.  In the cases the QA provider is also an Admin, another Admin is required to approve the claim as with any tasks.
 
 ### 4.3.4 Task Reservations
 
-Admins can reserve unassigned tasks to users who have left a valid [Request Reservation](#) Comment.
+Admins can reserve unassigned tasks to users who have left a valid [Request Reservation](#233-reserving-a-task) Comment.
 
 Where the comment is invalid, or for another reason such as lack of reputation or some previous issue,  an Admin should reply to the comment to advise that the reservation request was denied and the reasons why.
 
@@ -674,7 +678,7 @@ Once an approved Claim is awarded (the txid was entered into the sheet), the Bou
 
 ## 4.4 Admin Rewards
 
-Admins receive a % of the reward for Tasks on Bounty’s they administer, added to the Task reward, using the rates defined in the [Rewards List](#).
+Admins receive a % of the reward for Tasks on Bounty’s they administer, added to the Task reward, using the rates defined in the [Rewards List](#25-price-list).
 
 For example, if a Task Reward is 1 Dash and the Admin Reward is fixed at 10%, the user completing the Task is awarded the 1 Dash and the Bounty Admin is awarded an additional 0.1 Dash.
 
