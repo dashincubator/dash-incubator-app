@@ -9,7 +9,7 @@ This document is a protocol that defines the structure and operations of the [Da
 
 # Contents
 
-  1. [Introduction](#1-introduction)
+1. [Introduction](#1-introduction)
 2. [Bounty System](#2-bounty-system)
 3. [Output](#3-output)
 4. [Admins](#4-admins)
