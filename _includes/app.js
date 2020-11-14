@@ -37,21 +37,31 @@ function transformTrelloData(data, options = {}) {
         console.dir(data);
 
         //remove any cards from the concepts list and archive list
+        // TODO - use card level flags instead eg completed, ? concept accepted
         const listIdConcepts = TRELLO_LIST_ID_CONCEPTS;
-        const listIdArchive = TRELLO_LIST_ID_ARCHIVE;
+        const listIdArchive = TRELLO_LIST_ID_ARCHIVE; //this refers to completed tasks not archives
+
+        //TODO - retreive / process actual arhived cards seperately
 
         let trelloCards = data.cards;
         let trelloMembers = data.members;
 
         let concepts = trelloCards.filter(item => item.idList == listIdConcepts).map(item => { return { warningText: 'Concepts List - Excluded', cardName: item.name, cardUrl: item.shortUrl } });
-        let archived = trelloCards.filter(item => item.idList == listIdArchive).map(item => { return { warningText: 'Archived List - Excluded', cardName: item.name, cardUrl: item.shortUrl } });
-
-
-        let removedConceptsAndArchived = trelloCards.filter(item => item.idList !== listIdConcepts && item.idList !== listIdArchive);
+        
+        // TODO: archived should retrieved actualk archived cards
+        // this id for the complete list
+        // use custom field complete item instead to filter complete cards
+        // add another option tp retrived archived (trello= filter closed) cards
+        // 
+        //
+        let completed = []; 
+        //let archived = trelloCards.filter(item => item.idList == listIdArchive).map(item => { return { warningText: 'Archived List - Excluded', cardName: item.name, cardUrl: item.shortUrl } });
+        let removedConceptsAndArchived = trelloCards.filter(item => item.idList !== listIdConcepts);
 
         let removedConceptsAndArchivedCount = removedConceptsAndArchived.length;
 
         //only get cards with checklists
+        //TODO - remove? - this might exclude concepts
         let noChecklists = removedConceptsAndArchived.filter(item => item.checklists.length === 0).map(item => { return { warningText: 'No Checklists - Excluded', cardName: item.name, cardUrl: item.shortUrl } });;
 
 
@@ -62,11 +72,13 @@ function transformTrelloData(data, options = {}) {
         //process checklist items into array of task objects
         let cards = [];
         let tasks = [];
+        
         let cardWarnings = [];
         let taskWarnings = [];
         withChecklists.map(card => {
             //console.log("processing...");
             //TODO: remove unnecessary assignments
+            let cardFatalErrors;
             let cardId = card.id;
             let cardName = card.name;
             
@@ -129,10 +141,18 @@ function transformTrelloData(data, options = {}) {
 
             if (cardCustomFields.paused == true) {
                 cardWarnings.push({ warningText: 'Card Marked as Paused', cardName: card.name, cardUrl: card.shortUrl });
+                if (!options.showPausedCardBountyTasks) {
+                    cardWarnings.push({ warningText: 'Card Not Shown because it is marked as Paused', cardName: card.name, cardUrl: card.shortUrl });
+                    cardFatalErrors = true;
+                }
             }
 
             if (cardCustomFields.completed == true) {
                 cardWarnings.push({ warningText: 'Card Marked as Completed', cardName: card.name, cardUrl: card.shortUrl });
+                if (!options.showCompletedCardBountyTasks) {
+                    cardWarnings.push({ warningText: 'Card Not Shown because it is marked as Completed', cardName: card.name, cardUrl: card.shortUrl });
+                    cardFatalErrors = true;
+                }
             }
 
             if (cardCustomFields.meta == true) {
@@ -211,8 +231,8 @@ function transformTrelloData(data, options = {}) {
                     //?filter completed tasks
                     let taskComplete = (checklistItem.state == "complete" ? true : false);
                     if (taskComplete) {
-                        if (!options.showCompletedTasks) {
-                            taskWarnings.push({ warningText: `Task is completed - Not shown`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
+                        if (!options.showFinishedTasks) {
+                            taskWarnings.push({ warningText: `Task is finished - Not shown`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
                             taskFatalErrors = true;
                         }
                     }
@@ -239,6 +259,14 @@ function transformTrelloData(data, options = {}) {
                     if (cardData.cardPaused) {
                         if (!options.showPausedBountyTasks) {
                             taskWarnings.push({ warningText: `The card status is paused - Task Not shown`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
+                            taskFatalErrors = true;
+                        }
+                    }
+
+                    //Don't show tasks from paused bounty cards
+                    if (cardData.cardCompleted) {
+                        if (!options.showCompletedCardBountyTasks) {
+                            taskWarnings.push({ warningText: `The card status is completed - Task Not shown`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
                             taskFatalErrors = true;
                         }
                     }
@@ -271,6 +299,12 @@ function transformTrelloData(data, options = {}) {
 
             //nested card data
             //console.log('CARD DATA', cardData);
+            
+            //push card data to debug info if commpeted cards are not included
+            // ?? remove this & use logs above instead
+            if (!options.showCompletedCardBountyTasks) {completed.push(card)}
+
+            if (cardFatalErrors) { return; } //don't show completed / pauseed cards unless option are set to do so 
             cards.push({ ...cardData, cardTasks });
 
         })
@@ -299,7 +333,7 @@ function transformTrelloData(data, options = {}) {
             cards,
             debug: {
                 concepts,
-                archived,
+                completed,
                 removedListsCount: removedConceptsAndArchivedCount,
                 noChecklists,
                 warnings: { cardWarnings, taskWarnings }

@@ -27,7 +27,7 @@ layout: default-app
         try {
             let data = await getTrelloAllData();
             $('#loading-data').hide();
-            let transformedData = transformTrelloData(data, { showAssignedTasks: true });
+            let transformedData = transformTrelloData(data, { showCompletedCardBountyTasks: true, showPausedCardBountyTasks: true });
             let cards = transformedData.cards;
             cards.sort((a, b) => (a.cardRating > b.cardRating) ? -1 : 1)
             console.dir(cards);

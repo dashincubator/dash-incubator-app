@@ -14,11 +14,13 @@ layout: default-app
                         let transformedData = transformTrelloData(data);
                         let lists = transformedData.lists;
                         let debug = transformedData.debug;
+                        console.log('debug:')
+                        console.dir(debug);
                         //debug admin data
                         $('.data-concepts').html(warningsToTable(debug.concepts,'concepts'));
                         $('#total-concepts').text(debug.concepts.length);
-                        $('#data-archived').html(warningsToTable(debug.archived,'archived'));
-                        $('#total-archived').text(debug.archived.length);
+                        //$('#data-completed').html(warningsToTable(debug.completed,'completed'));
+                        $('#total-completed').text(debug.completed.length);
                         $('#cards-processed').text(debug.removedListsCount);
                         $('#data-no-checklists').html(warningsToTable(debug.noChecklists,'no-checklists'));
                         $('#total-no-checklists').text(debug.noChecklists.length);
@@ -152,13 +154,16 @@ layout: default-app
 <tr>
         <td colspan="2" class="data-concepts"></td>
 </tr>
+
 <tr>
-        <td>Not processed as in "Archived" List</td>
-        <td id="total-archived"></td>
+        <td>Not processed as in "completed" List</td>
+        <td id="total-completed"></td>
 </tr>
+<!--
 <tr>
-        <td colspan="2" id="data-archived"></td>
+        <td colspan="2" id="data-completed"></td>
 </tr>
+-->
 <tr>
         <td>Card processed</td>
         <td id="cards-processed"></td>
