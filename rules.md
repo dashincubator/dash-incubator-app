@@ -22,15 +22,15 @@ This document is a protocol that defines the structure and operations of the [Da
 
 Each Bounty’s work is divided into Tasks which have an agreed reward, the output of which is tracked in the App (such as a specification document, a Github commit, or a KPI such as % uptime on a website that can prove the value of the work completed).
 
-The App defines a [Bounty System](#) that operates like a pipeline where Bounties enter the pipeline as Concepts that progress through Specification and Production stages and finally to an Archive once all work is completed.
+The App defines a [Bounty System](#) that operates like a pipeline where Bounties enter the pipeline as Concepts that progress through Specification and Production stages until all tasks are finished and all work on the bounty is completed.
 
 A Bounty is categorized at the Concept stage as one of three types::
 
 *   **Projects** are group efforts that create products such as a decentralized app built on Dash (DApps).
 *   **Services** are ongoing activities that reward provision, such as website hosting, code maintenance, or a role within the fund itself.
-*   **Jobs** are one-off Tasks, such as finding bugs or fixing a github issue.  Job Tasks don’t need to be reserved like Project and Service bounties by users who want to complete them.
+*   **Jobs** are one-off Tasks, such as finding bugs or fixing a github issue.  Job Tasks don’t need to be reserved like Project and Service bounties by users who want to finish them.
 
-When users complete Tasks, they can make a claim for the Task Reward.
+When users finish Tasks, they can make a claim for the Task Reward.
 
 Task Claims are assessed by [Bounty Admins](#), who are the users who define and manage Tasks in Bounties.  Once a claim is approved by an Admin, the Task’s reward will be awarded to the user with a Dash transaction.
 
@@ -166,15 +166,15 @@ Bounties progress through four stages like a pipeline.  They are moved from stag
    </td>
    <td>Project, Service, Job
    </td>
-   <td>Archived
+   <td>Completed
    </td>
   </tr>
   <tr>
    <td>4
    </td>
-   <td>Archived
+   <td>Completed
    </td>
-   <td>Archive
+   <td>Complete
    </td>
    <td>n/a
    </td>
@@ -183,7 +183,7 @@ Bounties progress through four stages like a pipeline.  They are moved from stag
 
 Admins are incentivized to add new Bounties and lead them through each stage as quickly as possible as they earn commission on all Tasks at each stage.
 
-Bounties can be moved forwards and backwards across the Pipeline in certain cases, for example a Bounty that’s In Production’ can be moved back to ‘In Specification’ for additional requirements to be defined, or an ‘Archived’ Bounty can be unarchived if more work is required (although it’s usually better to add a new Card for the Bounty marking a Phase 2 or later in such cases).
+Bounties can be moved forwards and backwards across the Pipeline in certain cases, for example a Bounty that’s In Production’ can be moved back to ‘In Specification’ for additional requirements to be defined, or an ‘Completed’ Bounty can have more tasks added if more work is required (although it’s usually better to add a new Card for the Bounty marking a Phase 2 or later in such cases).
 
 Technically, Stage is determined by the state of their Tasks, so a Bounty could be, for example, ‘In Production’ (open tasks in the Production Tasks checklist) and also have Specification work being done simultaneously.  In such cases, the List the Bounty Card is in is only an indication of the Stage the Bounty is in and tasks for different stages can be worked on concurrently.
 
@@ -244,7 +244,7 @@ Tasks are defined with the following fields:
   <tr>
    <td><strong>Completed</strong>
    </td>
-   <td>Indication that the Task is complete (checkbox yes/no)
+   <td>Indication that the Task is finished (checkbox yes/no)
    </td>
   </tr>
   <tr>
@@ -303,20 +303,20 @@ Tasks are in either of the following states at any one time, depending on which 
    </td>
   </tr>
   <tr>
-   <td><strong>Completed</strong>
+   <td><strong>Finished</strong>
    </td>
    <td>The task user created a claim that was approved by an Admin
    </td>
-   <td>Task Number, Description, Reward, Due Date, Member exist, where Completed equals True
+   <td>Task Number, Description, Reward, Due Date, Member exist, where Finished equals True
    </td>
   </tr>
 </table>
 
-For Project and Service Tasks, users can reserve Unassigned Tasks, which means that an Admin will assign a Member to the Task exclusively along with a due date for the work to be completed.
+For Project and Service Tasks, users can reserve Unassigned Tasks, which means that an Admin will assign a Member to the Task exclusively along with a due date for the work to be finished.
 
 For Job Tasks, no reservations are available, meaning Assigned and Overdue states are not applicable.
 
-Once the work is complete, the Member can claim the reward for the task by leaving a comment on the Card referencing the task(s). 
+Once the task is finished, the Member can claim the reward for the task by leaving a comment on the Card referencing the task(s). 
 
 ### 2.3.3 Reserving a Task
 
@@ -348,7 +348,7 @@ Your claim will then be processed by an admin.
 
 ### 2.3.5 Processing claims
 
-An Admin will process new claims, assessing them based on the rules for the type of output you’ve produced and whether the work completes the Task adequately as it was defined.
+An Admin will process new claims, assessing them based on the rules for the type of output you’ve produced and whether the work finishes the Task adequately as it was defined.
 
 If the Admin approves the claim, they’ll leave a [Claim Approved comment](#) on the Trello Card, otherwise they may discuss any issues directly on the card comments with you.  Approved claims will be awarded usually within 7 days and will be listed in the [Claim Awards List](#).
 
@@ -463,13 +463,13 @@ Concepts provide fixed rewards as specified in the [Price List](#).
 
 ### 3.1.2 Claiming a Concept Task Reward
 
-Once an Admin has marked your reserved Concept Task(s) as completed, it can be moved to the Specification stage.  When the relevant Specification tasks have been completed, you can claim your Concept Reward.
+Once an Admin has marked your reserved Concept Task(s) as finished, it can be moved to the Specification stage.  When the relevant Specification tasks have been completed, you can claim your Concept Reward.
 
 ## 3.2 Specifications
 
 A Specification is a detailed definition of the work that needs to be completed for a Project, Service or Job Bounty.
 
-Bounties can be moved to the Specification stage (represented by their Card being in the Specifications list on Trello) meaning they need to have work specified before some production tasks can be completed.
+Bounties can be moved to the Specification stage (represented by their Card being in the Specifications list on Trello) meaning they need to have work specified before some production tasks can be finished.
 
 Producing a Specification involves taking an approved [Concept](#) and defining the criteria (such as features) that then allows a user to implement the concept.
 
@@ -485,7 +485,7 @@ Unassigned Specification tasks can be found on the [Trello Board](#) and listed 
 
 #### 3.2.2 Claiming a Specification Task Reward
 
-Once a specification task is complete you can claim a reward for the work that will then be assessed by an Admin by following the [Claims Process](#).
+Once a specification task is finished you can claim a reward for the work that will then be assessed by an Admin by following the [Claims Process](#).
 
 ## 3.3 Projects
 
@@ -507,7 +507,7 @@ Unassigned Project tasks are found on the [Trello Board](#) and listed on the [I
 
 ### 3.3.3 Claiming a Project Task Reward
 
-Once a project task is complete you can claim a reward for the work that will then be assessed by an Admin by following the [Claims process](#).
+Once a project task is finished you can claim a reward for the work that will then be assessed by an Admin by following the [Claims process](#).
 
 ## 3.4 Services
 
@@ -521,7 +521,7 @@ Unassigned Service tasks are found on the [Trello Board](#) and listed on the [I
 
 ### 3.4.2 Claiming a Service Task Reward
 
-Once a service task is complete you can claim a reward for the work that will then be assessed by an Admin by following the [Claims process](#).
+Once a service task is finished you can claim a reward for the work that will then be assessed by an Admin by following the [Claims process](#).
 
 ## 3.5 Jobs
 
@@ -541,7 +541,7 @@ Unassigned QA tasks can be found on the [Trello Board](#) and listed on the [Inc
 
 ### 3.6.2 Claiming a Service Task Reward
 
-Once a QA task is complete you can claim a reward for the work that will then be assessed by an Admin by following the [Claims Process](#).
+Once a QA task is finished you can claim a reward for the work that will then be assessed by an Admin by following the [Claims Process](#).
 
 # 4 Admins
 
@@ -563,9 +563,9 @@ Ultimately the Admins main goal is to get as many bounties completed as quickly 
 
 Admins check that data is correct and following the protocol defined in this document, and moderate where needed.
 
-Admins can complete any Tasks except on Bounties to which they’re assigned as the Bounty Admin for that card.  
+Admins can work on and claim any Tasks except on Bounties to which they’re assigned as the Bounty Admin for that card.  
 
-Currently Admins are appointed by the Incubator’s Proposal Owner on Dash who is an Admin with vito permissions on other Admin decisions and has responsibility for maintaining the app rules and payment of rewards from the Proposal address (although the goal is to decentralize this role in future when the App is upgraded to a DApp).
+Currently Admins are appointed by the Incubator’s Proposal Owner on Dash who is an Admin with veto permissions on other Admin decisions and has responsibility for maintaining the app rules and payment of rewards from the Proposal address (although the goal is to decentralize this role in future when the App is upgraded to a DApp).
 
 ## 4.1 Permissions
 
@@ -581,7 +581,7 @@ Admins create Cards using the ‘Create Concept’ button on the main menu in Tr
 
 ### 4.2.1 Bounty Cards
 
-When an admin creates a Bounty Card, they are assigned as the Bounty Admin for that Card (by assigning themselves as the Card Member on Trello) which gives them the right to earn Admin Rewards on all the Bounty’s completed Tasks.  
+When an admin creates a Bounty Card, they are assigned as the Bounty Admin for that Card (by assigning themselves as the Card Member on Trello) which gives them the right to earn Admin Rewards on all the Bounty’s finished Tasks.  
 
 Cards should always have only one member assigned at a time and who is the Bounty Admin for that card.
 
@@ -591,7 +591,7 @@ Admins can delegate their role on Bounty Cards to a different Admin user at any 
 
 If a Bounty has any outstanding Task Claims for more than 3 days with no reply to the user, another Admin can assign themselves to that card (and state to the prior Bounty Admin in the comments). 
 
-Admins can reserve and claim Tasks on any Bounty Cards that they’re not assigned as the admin for. In other words, Admins can’t administer and complete Tasks on the same Bounty card, they need another Admin to manage their tasks and process their claims on that card.
+Admins can reserve and claim Tasks on any Bounty Cards that they’re not assigned as the admin for. In other words, Admins can’t administer and work on or claim Tasks on the same Bounty card, they need another Admin to manage their tasks and process their claims on that card.
 
 ### 4.2.2 Card Description
 
@@ -620,7 +620,7 @@ When a task is reserved, it must also have a due date and a member who reserved 
 
 The description field of the task, i.e more broadly the requirements by which the task will be assessed as completed or not, is up to the discretion of the Admin.
 
-Unless the Task is a small piece of work that’s easy to test / know if it’s completed correctly, the Admin should link some info from the Task description describing the criteria for completion of the task.
+Unless the Task is a small piece of work that’s easy to test / know if it’s completed correctly, the Admin should link some info from the Task description describing the criteria for finishing the task.
 
 For Specification tasks, the scope could be quite broad, for example R&D that’s required, feasibility studies, analysis.. It’s up to the admin to decide how best to define Tasks to achieve the best results.
 
