@@ -574,7 +574,9 @@ function listToTable(tableId, projectHeaderName, data) {
     data.map(item => {
         //let link = `./bounty-detail.html?bountytaskid=${item.taskId}&bountytrellourl=${item.cardUrl}&bountyname=${item.checklistItemName}&bountycardname=${item.cardName}&bountycarddesc=${item.cardDesc}&bountyrewardusd=${item.rewardUSD}&bountyrewarddash=${item.rewardDash}&bountyadmin=${item.admin}&bountycardWorkType=${item.cardWorkType}`;
         let link = `./bounty-detail.html?taskid=${item.taskId}`;
-        strHTML += `<tr><td><div>${item.cardName}</div></td><td><div>${item.taskNumber}</div></td><td><div>${item.taskDesc}</div></td><td><div>${item.cardSkills || ''}</div></td><td><div><a href="${link}" class="btn">${item.rewardDash.toString().padEnd(5, ' ')} DASH ($${item.rewardUSD.toString().padStart(4, ' ')})</a></div></td></tr>`;
+
+
+        strHTML += `<tr><td><div>${item.cardName}</div></td><td><div>${item.taskNumber}</div></td><td><div>${item.taskDesc}</div></td><td><div>${item.cardSkills || ''}</div></td><td><div><a href="${link}" class="btn">${item.rewardDash.toString().padStart(5, '%').replace(/%/g, '&nbsp;')} DASH ${(`($${item.rewardUSD.toString()})`).padEnd(7, '%').replace(/%/g, '&nbsp;')}</a></div></td></tr>`;
     });
 
     strHTML += `
