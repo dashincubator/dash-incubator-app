@@ -25,7 +25,7 @@ This document is a protocol that defines the structure and operations of the [Da
 
 Each Bounty’s work is divided into Tasks which have an agreed reward, the output of which is tracked in the App (such as a specification document, a Github commit, or a KPI such as % uptime on a website that can prove the value of the work completed).
 
-The App defines a [Bounty System](#2-bounty-system) that operates like a pipeline where Bounties enter the pipeline as Concepts that progress through Specification and Production stages and finally to an Archive once all work is completed.
+The App defines a [Bounty System](#2-bounty-system) that operates like a pipeline where Bounties enter the pipeline as Concepts that progress through Specification and Production stages until all work is completed.
 
 A Bounty is categorized at the Concept stage as one of three types::
 
@@ -169,15 +169,15 @@ Bounties progress through four stages like a pipeline.  They are moved from stag
    </td>
    <td>Project, Service, Job
    </td>
-   <td>Archived
+   <td>Completed
    </td>
   </tr>
   <tr>
    <td>4
    </td>
-   <td>Archived
+   <td>Completed
    </td>
-   <td>Archive
+   <td>Complete
    </td>
    <td>n/a
    </td>
@@ -186,7 +186,7 @@ Bounties progress through four stages like a pipeline.  They are moved from stag
 
 Admins are incentivized to add new Bounties and lead them through each stage as quickly as possible as they earn commission on all Tasks at each stage.
 
-Bounties can be moved forwards and backwards across the Pipeline in certain cases, for example a Bounty that’s In Production’ can be moved back to ‘In Specification’ for additional requirements to be defined, or an ‘Archived’ Bounty can be unarchived if more work is required (although it’s usually better to add a new Card for the Bounty marking a Phase 2 or later in such cases).
+Bounties can be moved forwards and backwards across the Pipeline in certain cases, for example a Bounty that’s In Production’ can be moved back to ‘In Specification’ for additional requirements to be defined. A ‘Completed’ Bounty can also have the 'Completed' status removed if more work is required, although it’s usually better to add a new Card for the Bounty marking an additional phase in such cases.
 
 Technically, Stage is determined by the state of their Tasks, so a Bounty could be, for example, ‘In Production’ (open tasks in the Production Tasks checklist) and also have Specification work being done simultaneously.  In such cases, the List the Bounty Card is in is only an indication of the Stage the Bounty is in and tasks for different stages can be worked on concurrently.
 
