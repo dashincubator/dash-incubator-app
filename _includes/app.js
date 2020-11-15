@@ -571,13 +571,18 @@ function listToTable(tableId, projectHeaderName, data) {
                     </thead>
                     <tbody>
     `
-    data.map(item => {
-        //let link = `./bounty-detail.html?bountytaskid=${item.taskId}&bountytrellourl=${item.cardUrl}&bountyname=${item.checklistItemName}&bountycardname=${item.cardName}&bountycarddesc=${item.cardDesc}&bountyrewardusd=${item.rewardUSD}&bountyrewarddash=${item.rewardDash}&bountyadmin=${item.admin}&bountycardWorkType=${item.cardWorkType}`;
-        let link = `./bounty-detail.html?taskid=${item.taskId}`;
+    if(data.length>0){
+        data.map(item => {
+            //let link = `./bounty-detail.html?bountytaskid=${item.taskId}&bountytrellourl=${item.cardUrl}&bountyname=${item.checklistItemName}&bountycardname=${item.cardName}&bountycarddesc=${item.cardDesc}&bountyrewardusd=${item.rewardUSD}&bountyrewarddash=${item.rewardDash}&bountyadmin=${item.admin}&bountycardWorkType=${item.cardWorkType}`;
+            let link = `./bounty-detail.html?taskid=${item.taskId}`;
 
 
-        strHTML += `<tr><td><div>${item.cardName}</div></td><td><div>${item.taskNumber}</div></td><td><div>${item.taskDesc}</div></td><td><div>${item.cardSkills || ''}</div></td><td><div><a href="${link}" class="btn">${item.rewardDash.toString().padStart(5, '%').replace(/%/g, '&nbsp;')} DASH ${(`($${item.rewardUSD.toString()})`).padEnd(7, '%').replace(/%/g, '&nbsp;')}</a></div></td></tr>`;
-    });
+            strHTML += `<tr><td><div>${item.cardName}</div></td><td><div>${item.taskNumber}</div></td><td><div>${item.taskDesc}</div></td><td><div>${item.cardSkills || ''}</div></td><td><div><a href="${link}" class="btn">${item.rewardDash.toString().padStart(5, '%').replace(/%/g, '&nbsp;')} DASH ${(`($${item.rewardUSD.toString()})`).padEnd(7, '%').replace(/%/g, '&nbsp;')}</a></div></td></tr>`;
+        });
+    }
+    else{
+        strHTML += `<tr><td colspan="5">No ${projectHeaderName} Task Rewards Currently Available</td></tr>`
+    }
 
     strHTML += `
                     </tbody>
