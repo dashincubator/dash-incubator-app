@@ -47,14 +47,14 @@ function transformTrelloData(data, options = {}) {
         let trelloMembers = data.members;
 
         let concepts = trelloCards.filter(item => item.idList == listIdConcepts).map(item => { return { warningText: 'Concepts List - Excluded', cardName: item.name, cardUrl: item.shortUrl } });
-        
+
         // TODO: archived should retrieved actualk archived cards
         // this id for the complete list
         // use custom field complete item instead to filter complete cards
         // add another option tp retrived archived (trello= filter closed) cards
         // 
         //
-        let completed = []; 
+        let completed = [];
         //let archived = trelloCards.filter(item => item.idList == listIdArchive).map(item => { return { warningText: 'Archived List - Excluded', cardName: item.name, cardUrl: item.shortUrl } });
         let removedConceptsAndArchived = trelloCards.filter(item => item.idList !== listIdConcepts);
 
@@ -72,7 +72,7 @@ function transformTrelloData(data, options = {}) {
         //process checklist items into array of task objects
         let cards = [];
         let tasks = [];
-        
+
         let cardWarnings = [];
         let taskWarnings = [];
         withChecklists.map(card => {
@@ -81,20 +81,20 @@ function transformTrelloData(data, options = {}) {
             let cardFatalErrors;
             let cardId = card.id;
             let cardName = card.name;
-            
+
 
             let cardDesc = nl2br(card.desc);
 
             //replace md links with html <a> link
             let elements = cardDesc.match(/\[.*?\)/g);
-                if (elements != null && elements.length > 0) {
-                    for (el of elements) {
-                        let txt = el.match(/\[(.*?)\]/)[1];//get only the txt
-                        let url = el.match(/\((.*?)\)/)[1];//get only the link
-                        cardDesc = cardDesc.replace(el, '<a href="' + url + '" target="_blank">' + txt + '</a>')
-                    }
+            if (elements != null && elements.length > 0) {
+                for (el of elements) {
+                    let txt = el.match(/\[(.*?)\]/)[1];//get only the txt
+                    let url = el.match(/\((.*?)\)/)[1];//get only the link
+                    cardDesc = cardDesc.replace(el, '<a href="' + url + '" target="_blank">' + txt + '</a>')
                 }
-            
+            }
+
             let cardTrelloListId = card.idList;
             let cardUrl = card.shortUrl;
 
@@ -106,57 +106,57 @@ function transformTrelloData(data, options = {}) {
                 cardAdmin = card.members[0].username;
             }
             else {
-                cardWarnings.push({ warningText: 'No card admin set', cardName: card.name, cardUrl: card.shortUrl });
+                cardWarnings.push({ warnLevel: 1, warningText: 'No card admin set', cardName: card.name, cardUrl: card.shortUrl });
 
             }
             let cardCustomFields = processCustomFields(card.customFieldItems);
 
             if (cardCustomFields.cardWorkType == null) {
-                cardWarnings.push({ warningText: 'No work type set', cardName: card.name, cardUrl: card.shortUrl });
+                cardWarnings.push({ warnLevel: 1, warningText: 'No work type set', cardName: card.name, cardUrl: card.shortUrl });
             }
 
             if (cardCustomFields.skills == null) {
-                cardWarnings.push({ warningText: 'No skills set', cardName: card.name, cardUrl: card.shortUrl });
+                cardWarnings.push({ warnLevel: 2, warningText: 'No skills set', cardName: card.name, cardUrl: card.shortUrl });
             }
 
             if (cardCustomFields.source == null) {
-                cardWarnings.push({ warningText: 'No source set', cardName: card.name, cardUrl: card.shortUrl });
+                cardWarnings.push({ warnLevel: 2, warningText: 'No source set', cardName: card.name, cardUrl: card.shortUrl });
             }
 
             if (cardCustomFields.website == null) {
-                cardWarnings.push({ warningText: 'No website set', cardName: card.name, cardUrl: card.shortUrl });
+                cardWarnings.push({ warnLevel: 2, warningText: 'No website set', cardName: card.name, cardUrl: card.shortUrl });
             }
 
             if (cardCustomFields.phase == null) {
-                cardWarnings.push({ warningText: 'No phase set', cardName: card.name, cardUrl: card.shortUrl });
+                cardWarnings.push({ warnLevel: 3, warningText: 'No phase set', cardName: card.name, cardUrl: card.shortUrl });
             }
 
             if (cardCustomFields.LastPhase == null) {
-                cardWarnings.push({ warningText: 'No last phase set', cardName: card.name, cardUrl: card.shortUrl });
+                cardWarnings.push({ warnLevel: 3, warningText: 'No last phase set', cardName: card.name, cardUrl: card.shortUrl });
             }
 
             if (cardCustomFields.rating == null) {
-                cardWarnings.push({ warningText: 'No rating set', cardName: card.name, cardUrl: card.shortUrl });
+                cardWarnings.push({ warnLevel: 3, warningText: 'No rating set', cardName: card.name, cardUrl: card.shortUrl });
             }
 
             if (cardCustomFields.paused == true) {
-                cardWarnings.push({ warningText: 'Card Marked as Paused', cardName: card.name, cardUrl: card.shortUrl });
+                cardWarnings.push({ warnLevel: 3, warningText: 'Card Marked as Paused', cardName: card.name, cardUrl: card.shortUrl });
                 if (!options.showPausedCardBountyTasks) {
-                    cardWarnings.push({ warningText: 'Card Not Shown because it is marked as Paused', cardName: card.name, cardUrl: card.shortUrl });
+                    cardWarnings.push({ warnLevel: 3, warningText: 'Card Not Shown because it is marked as Paused', cardName: card.name, cardUrl: card.shortUrl });
                     cardFatalErrors = true;
                 }
             }
 
             if (cardCustomFields.completed == true) {
-                cardWarnings.push({ warningText: 'Card Marked as Completed', cardName: card.name, cardUrl: card.shortUrl });
+                cardWarnings.push({ warnLevel: 3, warningText: 'Card Marked as Completed', cardName: card.name, cardUrl: card.shortUrl });
                 if (!options.showCompletedCardBountyTasks) {
-                    cardWarnings.push({ warningText: 'Card Not Shown because it is marked as Completed', cardName: card.name, cardUrl: card.shortUrl });
+                    cardWarnings.push({ warnLevel: 3, warningText: 'Card Not Shown because it is marked as Completed', cardName: card.name, cardUrl: card.shortUrl });
                     cardFatalErrors = true;
                 }
             }
 
             if (cardCustomFields.meta == true) {
-                cardWarnings.push({ warningText: 'Card Marked as Meta', cardName: card.name, cardUrl: card.shortUrl });
+                cardWarnings.push({ warnLevel: 3, warningText: 'Card Marked as Meta', cardName: card.name, cardUrl: card.shortUrl });
             }
 
 
@@ -193,7 +193,7 @@ function transformTrelloData(data, options = {}) {
                     let checklistItemName = checklistItem.name;
 
                     if (ignoreBadTaskListName) {
-                        taskWarnings.push({ warningText: `Has bad checklist item name (${checklistName}) - Not processed`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
+                        taskWarnings.push({ warnLevel: 1, warningText: `Has bad checklist item name (${checklistName}) - Not processed`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
                         taskFatalErrors = true;
 
                     }
@@ -203,13 +203,13 @@ function transformTrelloData(data, options = {}) {
                     //console.log('parsedDesc', parsedDesc);
                     let taskNumber = parsedDesc.taskNumber;
                     if (taskNumber == null) {
-                        taskWarnings.push({ warningText: `Task Number did not parse (${checklistName}) - Not processed`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
+                        taskWarnings.push({ warnLevel: 1, warningText: `Task Number did not parse (${checklistName}) - Not processed`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
                         taskFatalErrors = true;
 
                     }
                     let taskDesc = nl2br(parsedDesc.taskDesc)
                     if (taskDesc == null) {
-                        taskWarnings.push({ warningText: `Task Description did not parse (${checklistName}) - Not processed`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
+                        taskWarnings.push({ warnLevel: 1, warningText: `Task Description did not parse (${checklistName}) - Not processed`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
                         taskFatalErrors = true;
 
                     }
@@ -217,7 +217,7 @@ function transformTrelloData(data, options = {}) {
                     //TODO: Use live rates
                     let rewardDash = parsedDesc.taskRewardDash;
                     if (rewardDash == null) {
-                        taskWarnings.push({ warningText: `Task Amount did not parse (${checklistName}) - Not processed`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
+                        taskWarnings.push({ warnLevel: 1, warningText: `Task Amount did not parse (${checklistName}) - Not processed`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
                         taskFatalErrors = true;
 
                     }
@@ -232,7 +232,7 @@ function transformTrelloData(data, options = {}) {
                     let taskComplete = (checklistItem.state == "complete" ? true : false);
                     if (taskComplete) {
                         if (!options.showFinishedTasks) {
-                            taskWarnings.push({ warningText: `Task is finished - Not shown`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
+                            taskWarnings.push({ warnLevel: 3, warningText: `Task is finished - Not shown`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
                             taskFatalErrors = true;
                         }
                     }
@@ -250,7 +250,7 @@ function transformTrelloData(data, options = {}) {
                     if (taskAssignedId != null) {
                         taskAssignedUsername = data.members.filter(name => name.id == taskAssignedId)[0].username || null;
                         if (!options.showAssignedTasks) {
-                            taskWarnings.push({ warningText: `Has an assigned member - Not shown`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
+                            taskWarnings.push({ warnLevel: 3, warningText: `Has an assigned member - Not shown`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
                             taskFatalErrors = true;
                         }
                     }
@@ -258,7 +258,7 @@ function transformTrelloData(data, options = {}) {
                     //Don't show tasks from paused bounty cards
                     if (cardData.cardPaused) {
                         if (!options.showPausedBountyTasks) {
-                            taskWarnings.push({ warningText: `The card status is paused - Task Not shown`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
+                            taskWarnings.push({ warnLevel: 3, warningText: `The card status is paused - Task Not shown`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
                             taskFatalErrors = true;
                         }
                     }
@@ -266,7 +266,7 @@ function transformTrelloData(data, options = {}) {
                     //Don't show tasks from paused bounty cards
                     if (cardData.cardCompleted) {
                         if (!options.showCompletedCardBountyTasks) {
-                            taskWarnings.push({ warningText: `The card status is completed - Task Not shown`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
+                            taskWarnings.push({ warnLevel: 3, warningText: `The card status is completed - Task Not shown`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
                             taskFatalErrors = true;
                         }
                     }
@@ -299,10 +299,10 @@ function transformTrelloData(data, options = {}) {
 
             //nested card data
             //console.log('CARD DATA', cardData);
-            
+
             //push card data to debug info if commpeted cards are not included
             // ?? remove this & use logs above instead
-            if (!options.showCompletedCardBountyTasks) {completed.push(card)}
+            if (!options.showCompletedCardBountyTasks) { completed.push(card) }
 
             if (cardFatalErrors) { return; } //don't show completed / pauseed cards unless option are set to do so 
             cards.push({ ...cardData, cardTasks });
@@ -643,7 +643,12 @@ function warningsToTable(data, type) {
     <table class="" id="">
                     <thead>
                         <tr>
-                            <th>Warning</th>
+                            <th>
+                                Level
+                            </th>
+                            <th>
+                                Warning
+                            </th>
                             <th>
                                 Card
                             </th>`
@@ -659,7 +664,7 @@ function warningsToTable(data, type) {
                     <tbody>`
 
     data.map(item => {
-        strHTML += `<tr><td>${item.warningText}</td><td><a href="${item.cardUrl}" target="_blank">${item.cardName}</a></td>`;
+        strHTML += `<tr class="warn-level-${item.warnLevel}"><td>${item.warnLevel}</td><td>${item.warningText}</td><td><a href="${item.cardUrl}" target="_blank">${item.cardName}</a></td>`;
         if (type == 'task') {
             strHTML += `<td>${item.taskDesc}</td>`;
         }

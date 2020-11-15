@@ -17,21 +17,21 @@ layout: default-app
                         console.log('debug:')
                         console.dir(debug);
                         //debug admin data
-                        $('.data-concepts').html(warningsToTable(debug.concepts,'concepts'));
+                        $('.data-concepts').html(warningsToTable(debug.concepts, 'concepts'));
                         $('#total-concepts').text(debug.concepts.length);
                         //$('#data-completed').html(warningsToTable(debug.completed,'completed'));
                         $('#total-completed').text(debug.completed.length);
                         $('#cards-processed').text(debug.removedListsCount);
-                        $('#data-no-checklists').html(warningsToTable(debug.noChecklists,'no-checklists'));
+                        $('#data-no-checklists').html(warningsToTable(debug.noChecklists, 'no-checklists'));
                         $('#total-no-checklists').text(debug.noChecklists.length);
-                        
+
                         $('#total-warnings').text(debug.warnings.cardWarnings.length + debug.warnings.taskWarnings.length);
                         $('#data-warnings-card').html(warningsToTable(debug.warnings.cardWarnings, 'card'));
                         $('#total-warnings-card').text(debug.warnings.cardWarnings.length);
                         $('#data-warnings-task').html(warningsToTable(debug.warnings.taskWarnings, 'task'));
                         $('#total-warnings-task').text(debug.warnings.taskWarnings.length);
-                        
-                        
+
+
 
                         //parse data to html tables & display
                         $('#list_project').append(listToTable('production', 'Production', lists.project));
@@ -39,6 +39,17 @@ layout: default-app
                         $('#list_service').append(listToTable('service', 'Service', lists.service));
                         $('#list_job').append(listToTable('job', 'Job', lists.job));
                         $('#list_qa').append(listToTable('qa', 'QA', lists.qa));
+                
+                
+                
+                        $('.toggler').change(function () {
+                        let whatToToggle=$(this).attr('toggletype') + $(this).attr('toggletarget')
+                        console.log('what to toggle:', whatToToggle)
+                        $(whatToToggle).toggle();
+                        });
+
+                
+                
                 }
                 catch (e) {
                         console.log('Something went wrong:', e);
@@ -48,155 +59,185 @@ layout: default-app
                 }
 
         });
+
+        
 </script>
 
 
 <h1 class="white-header-center">ADMIN</h1>
+<hr>
+<input class="toggler" type="checkbox" toggletype="#" toggletarget="app-config" >show/hide
 <h2>APP CONFIG</h2>
+<p>Manage app settings.</p>
+<div id="app-config" class="admin-collapsible">
+        <h3>Dash Rate</h3>
+        <p>
+                Set in <a href="{{ site.repoBaseUrl }}/tree/master/_data/app/dash.yml"
+                        target="_blank">{{ site.repoBaseUrl }}/tree/master/_data/app/dash.yml</a>
+        </p>
+        <table>
+                <thead>
+                        <th>variable</th>
+                        <th>explanation</th>
+                        <th>value</th>
+                </thead>
+                <tr>
+                        <td>dashusd</td>
+                        <td>Dash USD rate as float (e.g. 75.00)</td>
+                        <td>{{ site.data.app.dash.dashusd }}</td>
+                </tr>
+        </table>
 
-<h3>Dash Rate</h3>
+        <h3>Trello Board</h3>
+        <p>
+                Set in <a href="{{ site.repoBaseUrl }}/tree/master/_data/app/trello.yml"
+                        target="_blank">{{ site.repoBaseUrl }}/tree/master/_data/app/trello.yml</a>
+        </p>
+        <p>
+                Using data from board <a href="https://trello.com/b/{{ site.data.app.trello.board }}"
+                        target="_blank">https://trello.com/b/{{ site.data.app.trello.board }}</a>
+        </p>
+        <table>
+                <thead>
+                        <th>variable</th>
+                        <th>explanation</th>
+                        <th>value</th>
+                </thead>
+                <tr>
+                        <td>key</td>
+                        <td>Api key for the trello api user</td>
+                        <td>{{ site.data.app.trello.key }}</td>
+                </tr>
+                <tr>
+                        <td>board</td>
+                        <td>Id of the Trello Board</td>
+                        <td>{{ site.data.app.trello.board }}</td>
+                </tr>
+                <tr>
+                        <td>concepts</td>
+                        <td>Id of the Trello Concepts List (excluded)</td>
+                        <td>{{ site.data.app.trello.concepts }}</td>
+                </tr>
+                <tr>
+                        <td>archive</td>
+                        <td>Id of the Trello Archive List (excluded)</td>
+                        <td>{{ site.data.app.trello.archive }}</td>
+                </tr>
+                <tr>
+                        <td>customFieldWorkTypeId</td>
+                        <td></td>
+                        <td>{{ site.data.app.trello.customFieldWorkTypeId }}</td>
+                </tr>
+                <tr>
+                        <td>customFieldWorkTypeValueProject</td>
+                        <td></td>
+                        <td>{{ site.data.app.trello.customFieldWorkTypeValueProject }}</td>
+                </tr>
+                <tr>
+                        <td>customFieldWorkTypeValueProject</td>
+                        <td></td>
+                        <td>{{ site.data.app.trello.customFieldWorkTypeValueProject }}</td>
+                </tr>
+                <tr>
+                        <td>customFieldWorkTypeValueJob</td>
+                        <td></td>
+                        <td>{{ site.data.app.trello.customFieldWorkTypeValueJob }}</td>
+                </tr>
+                <tr>
+                        <td>customFieldSkillsId</td>
+                        <td></td>
+                        <td>{{ site.data.app.trello.customFieldSkillsId }}</td>
+                </tr>
+        </table>
+</div>
+
+<hr>
+<input class="toggler" type="checkbox" toggletype="#" toggletarget="unassigned" >show/hide
+<h2>UNASSIGNED CONCEPTS</h2>
 <p>
-        Set in <a href="{{ site.repoBaseUrl }}/tree/master/_data/app/dash.yml"  target="_blank">{{ site.repoBaseUrl }}/tree/master/_data/app/dash.yml</a>
+View newly submitted concpets which have not been approved by an Admin.
 </p>
-<table>
-        <thead>
-                <th>variable</th>
-                <th>explanation</th>
-                <th>value</th>
-        </thead>
-        <tr>
-                <td>dashusd</td>
-                <td>Dash USD rate as float (e.g. 75.00)</td>
-                <td>{{ site.data.app.dash.dashusd }}</td>
-        </tr>
-</table>
+<div id="unassigned" class="admin-collapsible">
+        
+        <p>TODO: CHECK IF CONCEPT LIST CARDS ARE COMPLETE ETC.</p>
+        <p>TODO: CHECK FOR NEWLY SUBMITTED IDEAS WHICH HAVE NOT BEEN CREATED AS CONCEPTS</p>
+        <div class="data-concepts"></div>
+</div>
 
-<h3>Trello Board</h3>
+<hr>
+<input class="toggler" type="checkbox" toggletype="#" toggletarget="assignments" >show/hide
+<h2>BUDGETS & ASSIGNMENTS</h2>
 <p>
-        Set in <a href="{{ site.repoBaseUrl }}/tree/master/_data/app/trello.yml" target="_blank">{{ site.repoBaseUrl }}/tree/master/_data/app/trello.yml</a>
+        Allocated funds, current reserved tasks (WIP) & overdue tasks 
 </p>
-<p>
-        Using data from board <a href="https://trello.com/b/{{ site.data.app.trello.board }}" target="_blank">https://trello.com/b/{{ site.data.app.trello.board }}</a>
-</p>
-<table>
-        <thead>
-                <th>variable</th>
-                <th>explanation</th>
-                <th>value</th>
-        </thead>
-        <tr>
-                <td>key</td>
-                <td>Api key for the trello api user</td>
-                <td>{{ site.data.app.trello.key }}</td>
-        </tr>
-        <tr>
-                <td>board</td>
-                <td>Id of the Trello Board</td>
-                <td>{{ site.data.app.trello.board }}</td>
-        </tr>
-        <tr>
-                <td>concepts</td>
-                <td>Id of the Trello Concepts List (excluded)</td>
-                <td>{{ site.data.app.trello.concepts }}</td>
-        </tr>
-        <tr>
-                <td>archive</td>
-                <td>Id of the Trello Archive List (excluded)</td>
-                <td>{{ site.data.app.trello.archive }}</td>
-        </tr>
-        <tr>
-                <td>customFieldWorkTypeId</td>
-                <td></td>
-                <td>{{ site.data.app.trello.customFieldWorkTypeId }}</td>
-        </tr>
-        <tr>
-                <td>customFieldWorkTypeValueProject</td>
-                <td></td>
-                <td>{{ site.data.app.trello.customFieldWorkTypeValueProject }}</td>
-        </tr>
-        <tr>
-                <td>customFieldWorkTypeValueProject</td>
-                <td></td>
-                <td>{{ site.data.app.trello.customFieldWorkTypeValueProject }}</td>
-        </tr>
-        <tr>
-                <td>customFieldWorkTypeValueJob</td>
-                <td></td>
-                <td>{{ site.data.app.trello.customFieldWorkTypeValueJob }}</td>
-        </tr>
-        <tr>
-                <td>customFieldSkillsId</td>
-                <td></td>
-                <td>{{ site.data.app.trello.customFieldSkillsId }}</td>
-        </tr>
-</table>
+<div id="assignments" class="admin-collapsible">
+</div>
 
-<h1 class="white-header-center">UNASSIGNED CONCEPTS</h1>
-<p>
-        <strong>These concepts have not yet been assigned an admin.</strong>
-</p>
-<p>TODO: CHECK IF CONCEPT LIST CARDS ARE COMPLETE ETC.</p>
-<p>TODO: CHECK FOR NEWLY SUBMITTED IDEAS WHICH HAVE NOT BEEN CREATED AS CONCEPTS</p>
-<div class="data-concepts"></div>
+<hr>
+<input class="toggler" type="checkbox" toggletype="#" toggletarget="data-processing" >show/hide</td>
+<h2>DATA PROCESSING</h2>
+<p>Data procesing errors and warnings.</p>
+<div id="data-processing" class="admin-collapsible">
+        Show Log Levels: 
+        <input name="chk1" class="toggler" type="checkbox" toggletype="." toggletarget="warn-level-1" id="chk1" value="" checked>1
+        <input name="chk2" class="toggler" type="checkbox" toggletype="." toggletarget="warn-level-2" id="chk2" value="" checked>2
+        <input name="chk3" class="toggler" type="checkbox" toggletype="." toggletarget="warn-level-3" id="chk3" value="">3
+        <table>
+                <tr>
+                        <td>total number of Trello Cards</td>
+                        <td id="total-cards"></td>
+                </tr>
+                <tr>
+                        <td>Not processed as in "Concepts" List  <input class="toggler" type="checkbox" toggletype="#" toggletarget="data-concepts-row" >show/hide</td>
+                        <td id="total-concepts"></td>
+                </tr>
+                <tr id="data-concepts-row" class="admin-collapsible">
+                        <td colspan="2" id="data-concepts"></td>
+                </tr>
 
+                <tr>
+                        <td>Not processed as in "completed" List <input class="toggler" type="checkbox" toggletype="#" toggletarget="data-completed-row">show/hide</td>
+                        <td id="total-completed"></td>
+                </tr>
 
+                <tr id="data-completed-row" class="admin-collapsible">
+                        <td colspan="2" id="data-completed"></td>
+                </tr>
 
-<h1 class="white-header-center">DATA PROCESSING</h1>
-<table>
-<tr>
-        <td>total number of Trello Cards</td>
-        <td id="total-cards"></td>
-</tr>
-<tr>
-        <td>Not processed as in "Concepts" List</td>
-        <td id="total-concepts"></td>
-</tr>
-<tr>
-        <td colspan="2" class="data-concepts"></td>
-</tr>
+                <tr>
+                        <td>Card processed</td>
+                        <td id="cards-processed"></td>
+                </tr>
+                <tr>
+                        <td>Cards ignored because they have no checklists</td>
+                        <td id="total-no-checklists"></td>
+                </tr>
+                <tr>
+                        <td colspan="2" id="data-no-checklists"></td>
+                </tr>
+                <tr>
+                        <td>Total WARNINGS</td>
+                        <td id="total-warnings"></td>
+                </tr>
+                <tr>
+                        <td>Cards Warnings  <input class="toggler" type="checkbox" toggletype="#" toggletarget="data-warnings-card-row" >show/hide</td>
+                        <td id="task-warnings-card"></td>
+                </tr>
+                <tr id="data-warnings-card-row" class="admin-collapsible">
+                        <td colspan="2" id="data-warnings-card"></td>
+                </tr>
+                <tr>
+                        <td>Task Warnings  <input class="toggler" type="checkbox" toggletype="#" toggletarget="data-warnings-task-row" >show/hide</td></td>
+                        <td id="total-warnings-task"></td>
+                </tr>
+                <tr id="data-warnings-task-row" class="admin-collapsible">
+                        <td colspan="2" id="data-warnings-task"></td>
+                </tr>
 
-<tr>
-        <td>Not processed as in "completed" List</td>
-        <td id="total-completed"></td>
-</tr>
+        </table>
+</div>
+
 <!--
-<tr>
-        <td colspan="2" id="data-completed"></td>
-</tr>
--->
-<tr>
-        <td>Card processed</td>
-        <td id="cards-processed"></td>
-</tr>
-<tr>
-        <td>Cards ignored because they have no checklists</td>
-        <td id="total-no-checklists"></td>
-</tr>
-<tr>
-        <td colspan="2" id="data-no-checklists"></td>
-</tr>
-<tr>
-        <td>Total WARNINGS</td>
-        <td id="total-warnings"></td>
-</tr>
-<tr>
-        <td>Cards Warnings</td>
-        <td id="total-warnings-card"></td>
-</tr>
-<tr>
-        <td colspan="2" id="data-warnings-card"></td>
-</tr>
-<tr>
-        <td>Task Warnings</td>
-        <td id="total-warnings-task"></td>
-</tr>
-<tr>
-        <td colspan="2" id="data-warnings-task"></td>
-</tr>
-
-</table>
-
-
 <h1 class="white-header-center">OUTPUT</h1>
 
 <p>
@@ -227,3 +268,4 @@ layout: default-app
 <h2>QA</h2>
 
 <div id="list_qa"></div>
+-->
