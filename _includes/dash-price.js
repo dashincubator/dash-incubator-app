@@ -28,7 +28,7 @@ function appendLeadingZeroes(n){
   }
   
 //get the dash price from dash retail API or fall back on value in _data/app/dash.yml 
-let DASHUSD =  Math.round({{ site.data.app.dash.dashusd }});
+let DASHUSD =  {{ site.data.app.dash.dashusd }};
 let DASH_UPDATED = "{{ site.data.app.dash.updated }}";
 
 async function setDashRate(){
@@ -36,7 +36,7 @@ async function setDashRate(){
         let apiResult = await getDashRate();
         console.log('apiResult:');
         console.dir(apiResult);
-        DASHUSD = Math.round(parseFloat(apiResult[0].price));
+        DASHUSD = parseFloat(apiResult[0].price).toFixed(2);
         let current_datetime = new Date()
         console.log(current_datetime.toString());
         const months = ["Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];

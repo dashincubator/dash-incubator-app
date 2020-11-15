@@ -149,7 +149,7 @@ text-align: center;
     position: absolute;
     left: 15px;
     top: 10px;
-    font-size: 14px;
+    font-size: 18px;
     color: white;
     text-decoration: none;
 }
@@ -218,6 +218,14 @@ text-align: center;
     width: 100%;
     right: auto;
 }
+
+.nav-container .nav-price{
+    position: relative;
+    margin-top: 14px;
+    width: 100%;
+    left: auto;
+}
+
 .nav-container .top-nav{
     position: relative;
     width: 100%;
