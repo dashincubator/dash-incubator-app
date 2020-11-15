@@ -226,11 +226,14 @@ function transformTrelloData(data, options = {}) {
                         taskFatalErrors = true;
 
                     }
+                    else {
+                        rewardDash = rewardDash.toFixed(2)
+                    }
                     let rewardUSD = null;
                     if (rewardDash !== null) {
                         //dashAmountFloat = parseFloat(extractedDashAmount);
                         //TODO error handling
-                        rewardUSD = rewardDash * Math.round(DASHUSD);
+                        rewardUSD = Math.round(rewardDash * DASHUSD);
                     }
 
                     //?filter completed tasks
@@ -563,7 +566,7 @@ function listToTable(tableId, projectHeaderName, data) {
                                 Task Description
                             </th>
                             <th>Skills</th>
-                            <th>Reward</th>
+                            <th>Reward*</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -571,7 +574,7 @@ function listToTable(tableId, projectHeaderName, data) {
     data.map(item => {
         //let link = `./bounty-detail.html?bountytaskid=${item.taskId}&bountytrellourl=${item.cardUrl}&bountyname=${item.checklistItemName}&bountycardname=${item.cardName}&bountycarddesc=${item.cardDesc}&bountyrewardusd=${item.rewardUSD}&bountyrewarddash=${item.rewardDash}&bountyadmin=${item.admin}&bountycardWorkType=${item.cardWorkType}`;
         let link = `./bounty-detail.html?taskid=${item.taskId}`;
-        strHTML += `<tr><td><div>${item.cardName}</div></td><td><div>${item.taskNumber}</div></td><td><div>${item.taskDesc}</div></td><td><div>${item.cardSkills || ''}</div></td><td><div><a href="${link}" class="btn">${item.rewardDash} DASH (&asymp;$${item.rewardUSD}*)</a></div></td></tr>`;
+        strHTML += `<tr><td><div>${item.cardName}</div></td><td><div>${item.taskNumber}</div></td><td><div>${item.taskDesc}</div></td><td><div>${item.cardSkills || ''}</div></td><td><div><a href="${link}" class="btn">${item.rewardDash.toString().padEnd(5, ' ')} DASH ($${item.rewardUSD.toString().padStart(4, ' ')})</a></div></td></tr>`;
     });
 
     strHTML += `
