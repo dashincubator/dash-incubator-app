@@ -11,6 +11,11 @@ padding: 50px;
 text-align: center;
 }
 
+#dash-updated {
+    display: inline-block;
+
+}
+
 .white-header-center {
     text-align: center;
     color: white;
@@ -134,6 +139,15 @@ text-align: center;
 .nav-container .nav-corner {
     position: absolute;
     right: 15px;
+    top: 10px;
+    font-size: 14px;
+    color: white;
+    text-decoration: none;
+}
+
+.nav-container .nav-price {
+    position: absolute;
+    left: 15px;
     top: 10px;
     font-size: 14px;
     color: white;
