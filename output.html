@@ -47,7 +47,7 @@ layout: default-app
                         }
                     }
                 }
-                if (showCard == true) { outputs.push(card); }
+                if (showCard && card.cardRating >=0) { outputs.push(card); }
             });
 
             outputs.sort((a, b) => (a.cardRating > b.cardRating) ? -1 : 1)
