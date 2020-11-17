@@ -27,15 +27,36 @@ layout: default-app
         try {
             let data = await getTrelloAllData();
             $('#loading-data').hide();
-            let transformedData = transformTrelloData(data, { showCompletedCardBountyTasks: true, showPausedCardBountyTasks: true });
+            //show all the tasks, so they can be filtered for 'incomplete outputs'
+            let transformedData = transformTrelloData(data, { showCompletedCardBountyTasks: true, showPausedCardBountyTasks: true, showPausedBountyTasks: true, showFinishedTasks: true, showAssignedTasks: true });
             let cards = transformedData.cards;
-            cards.sort((a, b) => (a.cardRating > b.cardRating) ? -1 : 1)
-            console.dir(cards);
+            //console.dir(cards)
+            let outputs = [];
+            cards.forEach(card => {
+
+                let showCard;
+                if (card.cardTasks.length > 0) {
+                    if (card.cardWorkType == 'Job') {
+                        showCard = true;
+
+                    }
+                    else {
+                        if (card.cardTasks.filter(ct => ct.taskComplete).length > 0) {
+                            showCard = true;
+
+                        }
+                    }
+                }
+                if (showCard == true) { outputs.push(card); }
+            });
+
+            outputs.sort((a, b) => (a.cardRating > b.cardRating) ? -1 : 1)
+            //console.dir(outputs);
 
 
             var source = $("#src").html();
             var template = Handlebars.compile(source);
-            $("#output").append(template({ cardObjects: cards }));
+            $("#output").append(template({ cardObjects: outputs }));
 
         }
         catch (e) {
