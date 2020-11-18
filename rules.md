@@ -23,19 +23,19 @@ This document is a protocol that defines the structure and operations of the [Da
 
 [Dash Incubator App](https://dashincubator.app) is a blockchain-funded App that incentivizes users to produce valuable output for Dash in the form of Bounties that reward users for completing Tasks.
 
-Each Bounty’s work is divided into Tasks which have an agreed reward, the output of which is tracked in the App (such as a specification document, a Github commit, or a KPI such as % uptime on a website that can prove the value of the work completed).
+Each Bounty’s work is divided into Tasks which have an agreed Reward, the output of which is tracked in the App (such as a specification document, a Github commit, or a KPI such as % uptime on a website that can prove the value of the work completed).
 
-The App defines a [Bounty System](#2-bounty-system) that operates like a pipeline where Bounties enter the pipeline as Concepts that progress through Specification and Production stages until all work is completed.
+The App defines a [Bounty System](#2-bounty-system) that operates like a pipeline where Bounties are created as Concepts that progress through Specification and Production stages until all work is completed.
 
 A Bounty is categorized at the Concept stage as one of three types::
 
-*   **Projects** are group efforts that create products such as a decentralized app built on Dash (DApps).
-*   **Services** are ongoing activities that reward provision, such as website hosting, code maintenance, or a role within the fund itself.
+*   **Projects** are groups of Tasks that create products such as a decentralized app built on Dash (DApps).
+*   **Services** are ongoing Tasks that reward provision of some service, such as website hosting, code maintenance, or a role within the fund itself.
 *   **Jobs** are one-off Tasks, such as finding bugs or fixing a github issue.  Job Tasks don’t need to be reserved like Project and Service bounties by users who want to complete them.
 
-When users complete Tasks, they can make a claim for the Task Reward.
+When users complete Tasks, they can make a Claim for the Task Reward.
 
-Task Claims are assessed by [Bounty Admins](#4-admins), who are the users who define and manage Tasks in Bounties.  Once a claim is approved by an Admin, the Task’s reward will be awarded to the user with a Dash transaction.
+Task Claims are assessed by [Bounty Admins](#4-admins), who are the users who define and manage Bounties and their Tasks.  Once a claim is approved by an Admin, the Task’s Reward will be Awarded to the user with a Dash transaction.
 
 The App is funded from a series of [Proposals](#5-funding) submitted to the Dash Network on a quarterly basis, with all spending from the fund tracked within the Bounty System itself.
 
@@ -43,7 +43,7 @@ All work is incentivized, from providing ideas, code and promotion, to quality a
 
 Both the App’s code and data are fully open-source, making everything fully transparent and auditable at all times without the need for external auditing or private interaction or decision making within the App.  
 
-The App is currently delivered as a frontend website that uses an open Trello board and Google document (GDoc) as the backend, but in future phases, a custom backend will be delivered, first as a database, then as a Dash DApp, and finally wired to the Dash proposal system itself as a Governance DApp.  
+The App is currently delivered as a frontend website that uses a public Trello board and Google document (GDoc) as the backend. In future phases, a custom backend will be delivered, first as a public database, then as a Dash DApp, and ultimately the plan is to wire the App to the Dash proposal system itself as a Governance DApp.  
 
 ## 1.2 Motivation
 
@@ -51,26 +51,27 @@ The Incubator was created in February of 2020 from a [blockchain proposal](https
 
 The Incubator maximizes value to the Dash network by minimizing management and decentralizing, automating, and incentivizing as much as possible.
 
-The Incubator is built from the ground up in a fully transparent way, from data to code.  This gives everyone access to all information regarding operations, decision making, finances, and priorities, reducing trust and communication needs.
+The Incubator is built from the ground up in a fully transparent way, from data to code.  This gives everyone access to all information regarding operations, decision making, finances and priorities, to minimize trust and communication needs.
 
 The key principles the Incubator is built on are:
 
-*   Raise only levels of funding that match what the Incubator can scale to 
 *   Incentivize user’s output not time
-*   Minimize the trust placed in human actors by tracking, matching and comparing their reputations of past output value 
-*   Incentives and micro incentives will be offered for all work, without any reliance on altruism
+*   Incentives and micro incentives will be offered for all work, without reliance on altruism
+*   Minimize the level of trust required in human actors by tracking, matching and comparing their reputations of past output value 
 *   Use free market principles at all levels of the incentive structure to maximize productivity, efficiency, decentralization and value
 *   Avoid centralized leadership via governance by quorums of users with the highest reputations based on output
 *   Maintain transparency of all information and operations of the app to avoid compartmentalization and maximize communications and visibility
+*   Raise only levels of funding that match what the Incubator can scale to 
+*   Always put the needs of the Dash Network ahead of any needs of the Incubator or the people who come to rely on its rewards as it grows 
 *   Promote and support easy replication of the Incubator with alternative strategies to improve decentralization and efficiency within Dash’s proposal ecosystem
 
 ## 1.3 Mission
 
-Our mission is to incentivize & support tech-entrepreneurs who want to innovate useful, easy-to-use trustless apps on Dash (DApps) and grow the Dash developer ecosystem.
+Our mission is to grow Dash userbase, ecosystem and developer community by incentivizing & supporting entrepreneurs to innovate useful, easy-to-use trustless apps on Dash (DApps) and the tools, infrastructure and protocols that enable that.
 
-We develop and maintain the Dash Incubator App as a platform for supporting this goal by onboarding, connecting and incentivizing new users to improve and grow Dash.
+We develop and maintain the Dash Incubator App as a platform for supporting these goals by onboarding, connecting and incentivizing new users to improve and grow Dash.
 
-The Incubator will always be operated and improved with the ethos of finding the most efficient and productive ways to deliver value back to the Dash Network that’s funding our activities.
+The Incubator will always be operated and improved with the ethos of finding the most efficient and productive ways to deliver value back to the Dash Network that’s funding our activities with a commitment of full transparency, full incentivization, and putting the needs of the Dash Network and the entirety of its stakeholders first.
 
 ## 1.4 Strategy
 
@@ -85,7 +86,7 @@ The current strategy of the Incubator is to:
 *   Incentivize replication of the incubator model within the Dash Network to promote decentralization
 *   Incentivize the raising of Proposals to implement the Incubator’s strategy
 
-## 1.5 Structure & Governance
+## 1.5 Structure
 
 Dash Incubator is a fully open-source community-driven App without any corporate or commercial interests owning, licensing or providing it.  
 
@@ -95,11 +96,11 @@ All source code (for projects the Incubator funds or the Incubator code itself) 
 
 There aren’t any fixed costs, employees or official representatives required for the Incubator to operate. There is no  organizational body to speak of, just users interacting with the Protocol defined in this document, and using the Incubator software. Instead, any work in developing the App itself or for it’s infrastructure, management or service provision, are offered as Bounties within the App that can be completed by anyone with the right skills and reputation.
 
-App management, strategy, and roadmap, are decided by quorums of Admin users who are community members with positive reputations of past contribution. They are assigned greater rights to administer the App’s usage and govern its development and strategy.  
+App management, strategy, and roadmap, are decided by quorums of Admin users who are community members with positive reputations of past contribution. They are assigned greater rights to administer the App’s usage and govern its development and strategy.  Currently the Proposal Owner for the App's funding proposals retains overall control of decision making but this will be decentralized once V1 of the App is mature.  
 
 ## 1.6 Licensing
 
-The Incubator doesn't own any assets, including any rights to any Task output,  nor does the Incubator apply any restrictions on providers' usage of their own Task output. This maximizes incentives and minimizes friction for entrepreneurs considering whether to invest in building their applications on Dash. 
+The Incubator doesn't own any assets, including any rights to any Task output,  nor does the Incubator apply any restrictions on providers' usage of their own Task output. This maximizes incentives and minimizes friction for entrepreneurs considering whether to invest in building on or integrating with Dash. 
 
 All data and interaction in the App is in the public domain, apart from any user authentication credentials.  
 
@@ -109,11 +110,11 @@ All output from Tasks procured by the fund must be open-source and licensed unde
 
 Funding for the Incubator comes from Dash Network [Proposals](#5-funding), voted on by the Masternode Network and awarded at each Superblock to the proposal’s address.
 
-Admins add approved claims in the [Claim Awards List](#) which get awarded via a Dash transaction from the Fund wallet. Every payment from the fund’s Wallet must be listed in the Claim Awards List and therefore relate back to a Trello card so that all accounting and payments are tracked and publicly auditable in a single unmixed address history.
+Admins add approved claims in the [Claim Awards List](#) which get awarded via a Dash transaction from the Fund wallet. Every payment from the fund’s Wallet must be listed in the Claim Awards List and therefore relate back to a Bounty Card so that all accounting and payments are tracked and publicly auditable in unmixed address histories derived from the Proposal's payment address.
 
 ## 1.8 Transparency
 
-The fund itself must remain fully open-source and transparent, with all transactions out of the wallet matching approved Claim awards in the Incubator app, so everyone has the same access to information.
+The fund itself must remain fully open-source and transparent, with all transactions out of the wallet matching Claim Awards in the Incubator app, so everyone has the same access to all information relating to the App.
 
 # 2 Bounty System
 
@@ -123,9 +124,9 @@ The core of the system is the concept of a Bounty which is a grouping of Tasks t
 
 Every piece of output from the Incubator is created via a Bounty, whether that’s a Dapp that’s produced, a website that’s hosted, or a Funding Proposal raised to the Dash Network, it’s tracked as a Bounty managed by Admins in the App.
 
-Each Bounty is represented by an individual Card in the App and refers to a piece of work proposed as a Concept by an App user.  Bounties are categorized into one of the 3 types mentioned in the Overview: Project, Service or Job.  Each Bounty comprises a set of Tasks grouped into one of the 4 Task Types: Concept, Specification, Production and QA Tasks, described later.  Every Bounty has a Bounty Admin, which is the Admin user incentivized to create and manage the Bounty’s Tasks for a commission added as a % on all Task rewards.
+Each Bounty is represented by an individual Card in the App and refers to a piece of work proposed as a Concept by an App user.  Bounties are categorized into one of the three types mentioned in the Overview: Project, Service or Job.  Each Bounty comprises a set of Tasks grouped into one of the four Task Types: Concept, Specification, Production and QA Tasks, described later.  Every Bounty has a Bounty Admin, which is the Admin user incentivized to create and manage the Bounty’s Tasks for a commission added as a % on all Task rewards.
 
-> The Bounty System is represented by a Trello Board, with each Bounty represented by an individual Trello Card. Stage the bounty is represented by the column the Card is in on the Board, with Cards progressing from left to right across the Board. 
+> The Bounty System is represented by a Trello Board, with each Bounty represented by an individual Trello Card. The Bounty's stage is represented by the column the Card is in on the Board, with Cards progressing from left to right across the Board forming a pipeline. 
 
 ## 2.1 Bounty Stages
 
@@ -186,11 +187,11 @@ Bounties progress through four stages like a pipeline.  They are moved from stag
 
 Admins are incentivized to add new Bounties and lead them through each stage as quickly as possible as they earn commission on all Tasks at each stage.
 
-Bounties can be moved forwards and backwards across the Pipeline in certain cases, for example a Bounty that’s In Production’ can be moved back to ‘In Specification’ for additional requirements to be defined. A ‘Completed’ Bounty can also have the 'Completed' status removed if more work is required, although it’s usually better to add a new Card for the Bounty marking an additional phase in such cases.
+Bounties can be moved forwards and backwards across the Pipeline in certain cases, for example a Bounty that’s ‘In Production’ can be moved back to ‘In Specification’ for additional requirements to be defined. A ‘Completed’ Bounty can also have the 'Completed' status removed if more work is required, although it’s usually better to add a new Card for the Bounty marking an additional phase in such cases.
 
-Technically, Stage is determined by the state of their Tasks, so a Bounty could be, for example, ‘In Production’ (open tasks in the Production Tasks checklist) and also have Specification work being done simultaneously.  In such cases, the List the Bounty Card is in is only an indication of the Stage the Bounty is in and tasks for different stages can be worked on concurrently.
+Technically, Stage is determined by the state of a Bounty's Tasks, so it could be, for example, ‘In Production’ (open tasks in the Production Tasks checklist) and also have Specification work being done simultaneously.  In such cases, the List the Bounty Card is in is only an indication of the Stage the Bounty is at and tasks for different stages can be worked on concurrently.
 
- > The Pipeline is represented on Trello via the Board’s Lists, with Bounties progressing from left to right across the Stages.
+ > Bounty Cards can be marked as Completed in Trello by checking the Completed checkbox in the Card's Custom Fields.  An additional label for Paused indicates that the work on a Bounty's Tasks is on hold.
 
 ## 2.2 Meta Bounties
 
@@ -204,9 +205,9 @@ Meta bounties allow easy segregation of Tasks that are needed in providing the I
 
 Bounty work is broken up into Tasks, which are individual pieces of work that users can complete to earn a reward, using a [Claims process](#234-claiming-a-reward).
 
-Each Task must produce some quantifiable Output that’s tracked with the Task’s Claim (a document, commit, etc), with special users called [Admins](#4-admins) who are incentivized to assess and approve claims or work to resolve issues.
+Each Task must produce some quantifiable Output that’s tracked with the Task’s Claim (a document, commit, etc), with special users called [Admins](#4-admins) who are incentivized and given rights to define and Tasks and approve their Claims.
 
-There are four types of Task available in any Bounty:
+There are four types of Task available within any Bounty Card:
 
 *   [Concept Tasks](#31-concepts) - work related to newly created Bounties at the Concept stage
 *   [Production Tasks](#33-projects) - work related to Tasks required to complete Project, Service and Job bounties
@@ -229,7 +230,7 @@ Tasks are defined with the following fields:
   <tr>
    <td><strong>Task Number</strong>
    </td>
-   <td>Integer representing the sequence of the Task in whatever list it’s in (Concept, Spec, Production or QA)
+   <td>Integer representing the sequence of the Task in whatever list it’s in (Concept, Specification, Production or QA)
    </td>
   </tr>
   <tr>
@@ -253,16 +254,16 @@ Tasks are defined with the following fields:
   <tr>
    <td><strong>User</strong>
    </td>
-   <td>Name of the user assigned to the Task who has reserved it (represented by assigning the member to the checklist Task on the Bounty Card in Trello).
+   <td>Name of the user assigned to the Task who has reserved it.
    </td>
   </tr>
 </table>
 
-> NOTE: Task Number and Description shown as text in a checklist on the Trello card, whereas Due Date, Completed and User are represented using the corresponding Trello Advanced Checklist feature.
+> Task Number and Description shown as text in a checklist on the Trello card, whereas Due Date, Completed and User are represented using the corresponding Trello Advanced Checklist feature, and User is represented by assigning the member to the checklist Task on the Bounty Card in Trello.
 
-### 2.3.2 Task Statuses
+### 2.3.2 Task States
 
-Tasks are in either of the following states at any one time, depending on which of the **Task Fields** are set:
+Tasks are in either of the following States at any one time, depending on which of the **Task Fields** are set:
 
 <table>
   <tr>
@@ -319,23 +320,25 @@ For Project and Service Tasks, users can reserve Unassigned Tasks, which means t
 
 For Job Tasks, no reservations are available, meaning Assigned and Overdue states are not applicable.
 
-Once the work is complete, the Member can claim the reward for the task by leaving a comment on the Card referencing the task(s). 
+Once the Task is complete, the Member can claim the reward for the task by leaving a comment on the Card referencing the task(s). 
+
+> Admins set the Completed state for Tasks by checking the Task's item in the Checklist on the Bounty Card on Trello.
 
 ### 2.3.3 Reserving a Task
 
-Reserving a Task means you have exclusive rights to complete it and make a Claim for the reward upto and including the Due Date.
+Reserving a Task means you have exclusive rights to Complete it and make a Claim for the Task Reward upto and including the Due Date.
 
-You need to first join as a member of the Trello board to reserve Tasks, which you can do using the [Invite Link](https://trello.com/invite/b/FPJzDcok/d63ef1ba39c74163866ec14ef3ec5c6e/dash-bounty-board).
+To be able to Reserve a Task please join as a Member of our Trello Board by leaving a comment on our [Member Signup Card](https://trello.com/c/VlpK4dgl/95-member-signup).
 
-To reserve a [Task](#23-bounty-tasks) write a comment on the card in Trello referencing the Checklist the task is in and the numbers you want to reserve, e.g. 
+Then you can reserve the Task by leaving a comment on the relevant Trello Card of the Task and including the number of the Task(s) you want to reserve from the Checklist it's in, e.g. 
 
-```i want to reserve Production Tasks 1-3```
+```I want to reserve Production Tasks 1-3```
 
-An Admin will assign your Trello user in the Task on the Card along with a due date for completion, or might comment if they have questions or there are issues with the reservation.
+An Admin will assign your Trello user in the Task on the Card along with a due date for completion, or will discuss any questions or issues with the reservation in the comments.
 
-If this is the first work you are producing in the Incubator and the Admin isn’t happy to reserve a certain task for an unknown user, it might be better to build some positive reputation e.g. by completing some Jobs first or sharing some relevant past open-source output you’ve contributed.
+If this is the first work you are producing in the Incubator it might benefit you to provide some examples of prior work to build some positive reputation e.g. by linking your Github repositories or completing some Jobs first.
 
-If a reserved Task isn’t claimed by the given Due Date, an Admin has the right to unreserve the task and reserve it for another user, although Admins should use discretion when unreserving tasks, for example to extend the date if there are extenuating circumstances such as dependencies out of the control of the provider or settle for the portion of the valid work delivered within the task.
+If a reserved Task isn’t claimed by the given Due Date, an Admin has the right to unreserve the task and reserve it for another user. However, Admins should use discretion when unreserving overdue Tasks, for example to extend the date if there are extenuating circumstances the user can provide evidence for, and/or settle for the portion of the valid work delivered within the task.
 
 ### 2.3.4 Claiming a reward
 
@@ -568,8 +571,6 @@ Admins check that data is correct and following the protocol defined in this doc
 
 Admins can complete any Tasks except on Bounties to which they’re assigned as the Bounty Admin for that card.  
 
-Currently Admins are appointed by the Incubator’s Proposal Owner on Dash who is an Admin with vito permissions on other Admin decisions and has responsibility for maintaining the app rules and payment of rewards from the Proposal address (although the goal is to decentralize this role in future when the App is upgraded to a DApp).
-
 ## 4.1 Permissions
 
 Admins are configured as Members of the Trello Board, who are the only users who can change data on the board.  Public users can’t change anything on the board apart from adding comments on cards.  
@@ -588,13 +589,13 @@ When an admin creates a Bounty Card, they are assigned as the Bounty Admin for t
 
 Cards should always have only one member assigned at a time and who is the Bounty Admin for that card.
 
-> Admins assign their username to the card in Trello (using the ‘Add to card->Members’ option on the right side of the card).  This card-level assignment is displayed on the front of the card on the Trello board.
-
 Admins can delegate their role on Bounty Cards to a different Admin user at any time by changing the Card’s assigned member to the new Admin (and presumably agree this first in the Card’s comments. The new admin then earns the rewards on any new task assignments (or the two admins can agree in the comments which Tasks they will each be administering and claiming rewards for).
 
-If a Bounty has any outstanding Task Claims for more than 3 days with no reply to the user, another Admin can assign themselves to that card (and state to the prior Bounty Admin in the comments). 
+If a Bounty has any outstanding Task Claims for more than 7 days with no reply to the user, another Admin can assign themselves to that card (and state to the prior Bounty Admin in the comments). 
 
 Admins can reserve and claim Tasks on any Bounty Cards that they’re not assigned as the admin for. In other words, Admins can’t administer and complete Tasks on the same Bounty card, they need another Admin to manage their tasks and process their claims on that card.
+
+> Admins assign their username to the card in Trello (using the ‘Add to card->Members’ option on the right side of the card).  This card-level assignment is displayed on the front of the card on the Trello board.
 
 ### 4.2.2 Card Description
 
@@ -683,6 +684,14 @@ For example, if a Task Reward is 1 Dash and the Admin Reward is fixed at 10%, th
 
 To receive rewards Admins must enter in the additional info in the Claim Awards List inline with each user’s Task claim, stating their name, Dash address and the reward amount (auto calculated).  The txid for the transaction should be pasted by the Admin who sends it.
 
+
+## 4.5 Governance
+
+Currently Admins are appointed by the Incubator’s Proposal Owner on Dash who is an Admin with veto permissions on other Admin decisions and has responsibility for maintaining these App Rules and payment of Rewards from the Proposal address.
+
+The goal is to move to full decentralized decision making by Admins with rules for elections, removal, decisions (such as altering Rules). 
+
+
 # 5 Funding
 
 Dash to use to award Bounty Task Rewards are sought via Dash Proposals every 3 superblock cycles (roughly 3 months).
@@ -695,7 +704,7 @@ The Proposal Owner agrees to transfer Dash from the Proposal Wallet only for the
 
 The Proposal Owner will track all transactions from the Proposal Wallet in the [Claim Awards List](#). 
 
-The Proposal Owner is granted Admin rights with the equivalent of 2 Admin Votes on Governance decisions. 
+The Proposal Owner is granted Admin rights automatically. 
 
 > Note that in Phase 4 of the Incubator Roadmap, the Proposal Owner won’t be needed, as the Incubator as a Funded-Dapp can request and distribute funds trustlessly using smart code.
 
@@ -721,7 +730,7 @@ This section links the resources required to access any information relating to 
   <tr>
    <td>App Data (Trello):
    </td>
-   <td><a href="https://trello.com/b/D5wypdJ0/project-board">https://trello.com/b/D5wypdJ0/project-board</a>
+   <td><a href="https://trello.com/b/FPJzDcok/dash-incubator-app">https://trello.com/b/FPJzDcok/dash-incubator-app</a>
    </td>
   </tr>
   <tr>
@@ -766,6 +775,9 @@ Phase 2:<a href="https://www.dashcentral.org/p/dash-platform-incubator-phase-2">
 <p>
 Phase 3: <a href="https://www.dashcentral.org/p/dash-platform-incubator-phase-3">https://www.dashcentral.org/p/dash-platform-incubator-phase-3</a> 
 </p>
+<p>
+Phase 4: <a href="https://www.dashcentral.org/p/dash-platform-incubator-phase-4">https://www.dashcentral.org/p/dash-platform-incubator-phase-4</a> 
+</p>
    </td>
   </tr>
 </table>
@@ -786,13 +798,13 @@ Three further versions of the App are planned leading to the implementation as a
   <tr>
    <td>1
    </td>
-   <td>Read-only frontend website using [Trello](#) and [Gdocs](#) for the backend.  Users enter info on Trello.
+   <td>Read-only frontend website using <a href="https://trello.com/b/FPJzDcok/dash-incubator-app">Trello</a> and <a href="https://docs.google.com/spreadsheets/d/1mhXlo4ylqWLLSYN4MGiLWlp7Gq3jrsDt0kB701dwMNU/edit?usp=sharing">GDocs</a> for the backend.  Users enter info on Trello.
    </td>
   </tr>
   <tr>
    <td>2
    </td>
-   <td>CRUD enabled website using a (public) database on the backend.  Users can do everything via the site.
+   <td>CRUD enabled website using a (public) database on the backend.  Rules are fully implemented via the website frontend for users.
    </td>
   </tr>
   <tr>
