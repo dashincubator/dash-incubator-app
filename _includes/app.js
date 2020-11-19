@@ -581,7 +581,7 @@ function listToTable(tableId, projectHeaderName, data) {
         });
     }
     else{
-        strHTML += `<tr><td colspan="5">No ${projectHeaderName} Task Rewards Currently Available</td></tr>`
+        strHTML += `<tr><td colspan="5">All ${projectHeaderName} Tasks are currently reserved (check again later)</td></tr>`
     }
 
     strHTML += `
