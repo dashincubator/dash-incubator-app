@@ -658,7 +658,7 @@ An admin must reply to the user with a valid Confirm Reservation comment as foll
 
 This comment alerts the user that the relevant tasks were reserved and provides the admin’s proof to claim their % of the task(s) reward once they are awarded.
 
-> The admin must also assign the user to the tasks in the relevant Trello checklist, so that the task is no longer shown as unreserved on the Incubator website.
+The admin must also assign the user to the tasks in the relevant Trello checklist, so that the task is no longer shown as unreserved on the Incubator website, and set an appropriate completion date (after discussing this with the user if necessary).
 
 ### 4.3.5 Task Claims
 
