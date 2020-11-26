@@ -648,17 +648,13 @@ QA Tasks claims should be requested by users and processed by Admins like regula
 
 ### 4.3.4 Task Reservations
 
-Admins can reserve unassigned tasks to users who have left a valid [Request Reservation](#233-reserving-a-task) Comment.
-
-Where the comment is invalid, or for another reason such as lack of reputation or some previous issue,  an Admin should reply to the comment to advise that the reservation request was denied and the reasons why.
-
-An admin must reply to the user with a valid Confirm Reservation comment as follows:
+Admins can reserve unassigned tasks to users who have left a valid [Request Reservation](#233-reserving-a-task) comment.  If the Admin deems the request valid, they assign the user to the tasks in the Specification Tasks checklist, which removes those tasks from availability on the Incubator website. They may also comment to alert the user that the relevant tasks were reserved, for example:
 
 ```@username reserved tasks: 1,2,3,4,5```
 
-This comment alerts the user that the relevant tasks were reserved and provides the admin’s proof to claim their % of the task(s) reward once they are awarded.
+If the comment is invalid, either technically or for another reason such as lack of reputation or some previous issue, the Admin should reply to the comment to request clarification or give the reason(s) why the request was denied, for example:
 
-The admin must also assign the user to the tasks in the Specification Tasks checklist, which will show the task as reserved on the Incubator website.
+```@username, there are two "task 3"s, are you requesting to reserve Specification Task 3, or Production Task 3?```
 
 ### 4.3.5 Task Claims
 
