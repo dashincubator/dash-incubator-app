@@ -124,7 +124,7 @@ The core of the system is the concept of a Bounty which is a grouping of Tasks t
 
 Every piece of output from the Incubator is created via a Bounty, whether that’s a Dapp that’s produced, a website that’s hosted, or a Funding Proposal raised to the Dash Network, it’s tracked as a Bounty managed by Admins in the App.
 
-Each Bounty is represented by an individual Card in the App and refers to a piece of work proposed as a Concept by an App user.  Bounties are categorized into one of the three types mentioned in the Overview: Project, Service or Job.  Each Bounty comprises a set of Tasks grouped into one of the four Task Types: Concept, Specification, Production and QA Tasks, described later.  Every Bounty has a Bounty Admin, which is the Admin user incentivized to create and manage the Bounty’s Tasks for a commission added as a % on all Task rewards.
+Each Bounty is represented by an individual Card in the App and refers to a piece of work proposed as a Concept by an App user.  Bounties are categorized into one of the three types mentioned in the Overview: Project, Service or Job.  Each Bounty comprises a set of Tasks grouped into one of the four Task Types: Concept, Specification, Production and QA Tasks, described later.  Every Bounty has two Bounty Admins, a Primary Admin and a Secondary Admin. [Admins](#4-admins) are users incentivized to create and manage the Bounty’s Tasks.  They earn [commission](#44-admin-rewards) on all completed Bounty Tasks.
 
 > The Bounty System is represented by a Trello Board, with each Bounty represented by an individual Trello Card. The Bounty's stage is represented by the column the Card is in on the Board, with Cards progressing from left to right across the Board forming a pipeline. 
 
@@ -334,7 +334,7 @@ Then you can reserve the Task by leaving a comment on the relevant Trello Card o
 
 ```I want to reserve Production Tasks 1-3```
 
-An Admin will assign your Trello user in the Task on the Card along with a due date for completion, or will discuss any questions or issues with the reservation in the comments.
+An Admin (typically the Bounty's Primary Admin) will assign your Trello user in the Task on the Card along with a due date for completion, or will discuss any questions or issues with the reservation in the comments.
 
 If this is the first work you are producing in the Incubator it might benefit you to provide some examples of prior work to build some positive reputation e.g. by linking your Github repositories or completing some Jobs first.
 
@@ -354,7 +354,7 @@ Your claim will then be processed by an admin.
 
 ### 2.3.5 Processing claims
 
-An Admin will process new claims, assessing them based on the rules for the type of output you’ve produced and whether the work completes the Task adequately as it was defined.
+All claims are processed by Admins.  Claims are assessed based on the rules for the type of output produced, and whether the work completes the Task adequately as it was defined.  
 
 If the Admin approves the claim, they’ll leave a [Claim Approved comment](#435-task-claims) on the Trello Card, otherwise they may discuss any issues directly on the card comments with you.  Approved claims will be awarded usually within 7 days and will be listed in the [Claim Awards List](#).
 
@@ -362,9 +362,9 @@ If the Admin approves the claim, they’ll leave a [Claim Approved comment](#435
 
 Each type of reward for Tasks in the App are listed below along with the min/max amounts of Dash that can be offered and basic criteria upon which claims will be approved.  
 
-Exact rewards are decided by the Bounty Admin with the price fixed or negotiated with a user who is reserving the relevant Tasks.
+Rewards are fixed, Dash-denominated amounts decided by Bounty Admins (typically the Bounty's Primary Admin).  Users may negotiate the amount with the appropriate Admin before requesting a reservation or making a claim.  For Tasks carried out by a Bounty's Primary Admin, the reward is decided by the Secondary Admin (see Section 5 for details). 
 
-Note that the Meta % is the commission added to the Task that Bounty Admins earn for creating and managing Tasks.
+The Meta % is an added commission that Admins earn for creating and managing Tasks.  For example, under 10% commission, an approved 10 DASH Task yields 10 DASH for the user completing the task, and 1 DASH for the Admin processing the claim.
 
 <table>
   <tr>
@@ -443,7 +443,7 @@ Bounties at the Concept stage require specific info from a user to enable [Admin
 
 Concepts are value propositions that both define how some idea would work and what problems it would solve, and a [New Concept Template](#) is provided as a guideline for the kind of info Admins want to assess new Concepts. 
 
-Admins should approve any Concept that is clearly defined, within budget and inline with the current Incubator [Strategy](#14-strategy).
+Admins should approve any Concept that is clearly defined, within budget and inline with the current Incubator [Strategy](#14-strategy).  Concepts require approval from two Admins to move on to the Specification state.  The first Admin to approve a given Concept becomes that Bounty's Primary Admin.  The second Admin to approve a given concept becomes that Bounty's Secondary Admin.
 
 The user who creates a Concept has 24hrs of exclusive privilege to request to reserve the corresponding Specification Tasks once the Bounty is moved to the Specification List, after which time it is open to anyone.
 
@@ -461,11 +461,9 @@ To propose a new Concept:
 1. Fill in the info detailed in the [New Concept Template](#) document.  
 2. Add a comment on the [New Concept Card](#) on the Trello Board, linking the template you’ve created.
 
-Admins will then review your concept, and if it satisfies the [Concept requirements](#31-concepts) it will be added as a new card in the Concepts list on Trello.  
+Admins will then review your concept, and if it satisfies the [Concept requirements](#31-concepts) it will be added as a new card in the Concepts list on Trello.  Admins may ask you to expand on or amend some of the info in the template doc you posted.  
 
-An admin may ask you to expand on or amend some of the info in the template doc you posted.  The admin will also reserve the task for you, so that you can claim a Concept Reward if the concept completes the [specification](#32-specifications) stage.
-
-Concepts provide fixed rewards as specified in the [Price List](#25-price-list). 
+If two Admin's approve your Concept, the Primary Admin will reserve the Concept Task for you, so that you can claim the reward if the concept completes the [specification](#32-specifications) stage.  Concepts provide fixed rewards as specified in the [Price List](#25-price-list). 
 
 ### 3.1.2 Claiming a Concept Task Reward
 
@@ -555,45 +553,35 @@ This section relates to the special Admin role and rules on how they operate.
 
 Admins work to facilitate the production of output and regulate the operations of the fund itself.
 
-Admins earn rewards in the form of a % commission added to the value of the Tasks on Bounties that they manage, as defined in the [Price List](#25-price-list). 
+Admins earn commission on Bounty Tasks where they function as Primary Admin, as defined in the [Price List](#25-price-list).  This is to incentivize ownership of the Tasks in terms of defining them, promoting them and supporting the work involved in their completion.
 
-This is to incentivize ownership of the Tasks in terms of defining them, promoting them and supporting the work involved in their completion.  
+An Admin's reputation is based on the history of Bounties they have delivered, and as everything in the App is public, all metrics for an Admins performance can be mined from the App’s data.
 
-An Admins role is reputation based on the history of Bounties they have delivered, and as everything in the App is public, all metrics for an Admins performance can be mined from the App’s data.
+The number of users given Admin rights is limited and Admins effectively compete with each other on performance (how good is their output). Low performing Admins may be replaced with new Admins periodically at the discretion of the Proposal owner.
 
-The number of users given Admin rights is limited and Admins effectively compete with each other on performance (how good is their output). 
-
-The least performing Admin roles may be replaced with new Admins periodically at the discretion of the Proposal owner.
-
-Ultimately the Admins main goal is to get as many bounties completed as quickly as possible, so that they can maximize commission and secondly grow a list of successful and popular bounties that deliver the most value at the least cost when compared to other Admins in the system.
+The Admins main goal is to get as many bounties completed as quickly as possible, so that they can maximize commission and secondly grow a list of successful and popular bounties that deliver the most value at the least cost when compared to other Admins in the system.
 
 Admins check that data is correct and following the protocol defined in this document, and moderate where needed.
 
-Admins can complete any Tasks except on Bounties to which they’re assigned as the Bounty Admin for that card.  
-
 ## 4.1 Permissions
 
-Admins are configured as Members of the Trello Board, who are the only users who can change data on the board.  Public users can’t change anything on the board apart from adding comments on cards.  
-
-Public users who want to complete Tasks need to first join the Trello board as an observer using the [Invite Link](https://trello.com/invite/b/FPJzDcok/d63ef1ba39c74163866ec14ef3ec5c6e/dash-bounty-board).
+Admins are configured as Members of the Trello Board, who are the only users who can change data on the board.  Public users can’t change anything on the board apart from adding comments on cards.  There is no authoritative or rank difference betweeen Primary Admins and Secondary Admins in general, only as it relates to specific Bounties, as detailed in the following section.
 
 ## 4.2 Bounty Admin
 
-Admins are the only users with permission to create and edit Bounty Cards, and change their status by moving them forwards or backwards through the pipeline (left or right across Trello columns), non-admin users can comment on Cards only (these permissions are configured on Trello).
+As described in [Section 3](#31-concepts) above, two Admins are required to turn a Concept into a Bounty.  The first Admin who accepts the Concept is the initial Primary Admin.  The second Admin who accepts the Concept is the initial Secondary Admin.  The main purpose of the Secondary Admin is to allow the Primary Admin to reserve, do, and claim Tasks on a Primary Admin's own Bounty.  When a Primary Admin wants to reserve a task on his own Bounty he must request this from the Secondary Admin.  The Secondary Admin is the one who approves this reservation, following the same rules set out in [Section 2.3.3](#233-reserving-a-task).  When the Primary Admin makes a claim for Task(s), it is the Secondary Admin who processes the claim.  Secondary Admins are allowed to reserve, do, and claim task as any normal user would.  This effectively allows any individual the ability to both administer Tasks and reserve, do, and claim Tasks belonging to any Bounty.  It does this while also retaining checks and balances, disallowing anyone from being able to approve their own work.
 
-Admins create Cards using the ‘Create Concept’ button on the main menu in Trello, and in response to a user’s request for a new concept comment on the New Concept card at the top of the Concepts list.  
+For example, Admin Alice is the first Admin to approve a Concept.  Admin Bob is the second Admin to approve the Concept.  The Concept becomes a Bounty with Alice as the Primary Admin and Bob as the Secondary Admin.  Specifier Sam creates a Spec that results in Production Tasks 1 and 2.  Developer Dave requests, implements, and claims Production Task 1.  Admin Alice processes Dave's claim and receives commission.  Primary Admin Alice requests to reserve Production Task 2.  Secondary Admin Bob approves the reservation.  Alice finishes the work and makes her claim.  Bob processes the claim and receives his commission. 
+
+The Primary Admin has the default permission to edit (add tasks, move from stage to stage, etc.) the Bounty Cards.  Non-admin users can only comment on Cards.  Secondary Admins only have permission to process requests from the Primary Admin, as explained above.  
 
 ### 4.2.1 Bounty Cards
 
-When an admin creates a Bounty Card, they are assigned as the Bounty Admin for that Card (by assigning themselves as the Card Member on Trello) which gives them the right to earn Admin Rewards on all the Bounty’s completed Tasks.  
+Primary and Secondary Admins assign themselves as Card Members on Trello to signify their roles in the Bounty.  Cards should always have two (and only two) members assigned at a time.
 
-Cards should always have only one member assigned at a time and who is the Bounty Admin for that card.
+Primary Admins can authorize Secondary Admins to temporarily take over the responsibilities and accompanying rewards belonging to the Primary Admin.  This is done by commenting on the Trello card with a date when the responsibilities and rewards are should fall back onto the Primary Admin.  When a Primary Admin no longer wishes to administer a given bounty, the Secondary Admins has the first right to take over as Primary Admin.  If the Secondary Admin does not want to become Primary Admin the role is open to any Admin who wants it.  This is done by changing the Card’s assigned member(s) to the new Primary and Secondary Admins.  Ideally this is agreed upon this first in the Card’s comments.  The new Primary Admin then earns the rewards on any new task assignments.
 
-Admins can delegate their role on Bounty Cards to a different Admin user at any time by changing the Card’s assigned member to the new Admin (and presumably agree this first in the Card’s comments. The new admin then earns the rewards on any new task assignments (or the two admins can agree in the comments which Tasks they will each be administering and claiming rewards for).
-
-If a Bounty has any outstanding Task Claims for more than 7 days with no reply to the user, another Admin can assign themselves to that card (and state to the prior Bounty Admin in the comments). 
-
-Admins can reserve and claim Tasks on any Bounty Cards that they’re not assigned as the admin for. In other words, Admins can’t administer and complete Tasks on the same Bounty card, they need another Admin to manage their tasks and process their claims on that card.
+If a Bounty has any outstanding Task Claims for more than 7 days with no reply to the user, the Secondary Admin can assign themselves as the Primary Admin and any other Admin can assign themselves Secondary Admin on that card, stating the change to the prior Bounty Admin(s) in the card comments.
 
 > Admins assign their username to the card in Trello (using the ‘Add to card->Members’ option on the right side of the card).  This card-level assignment is displayed on the front of the card on the Trello board.
 
@@ -607,7 +595,6 @@ Custom fields (using the Trello Powerup) should be set by the Bounty Admin at th
 
 ## 4.3 Task Admin
 
-
 ### 4.3.1 Task Format
 
 All tasks must be specified in the relevant Checklist on the Trello card, with the following format, to allow API retrieval:
@@ -616,13 +603,13 @@ All tasks must be specified in the relevant Checklist on the Trello card, with t
 
 For example:
 
-```1) Fix current build issue (1 Dash)```
+```1) Fix current build issue (1 DASH)```
 
 When a task is reserved, it must also have a due date and a member who reserved it set using the relevant functions on Trello’s advanced checklist. 
 
 ### 4.3.2 Task Scope
 
-The description field of the task, i.e more broadly the requirements by which the task will be assessed as completed or not, is up to the discretion of the Admin.
+The description field of the task, i.e more broadly the requirements by which the task will be assessed as completed or not, is up to the discretion of the Admins.
 
 Unless the Task is a small piece of work that’s easy to test / know if it’s completed correctly, the Admin should link some info from the Task description describing the criteria for completion of the task.
 
@@ -644,11 +631,11 @@ For example:
 
 QA Rewards are set as a % added to the relevant Task the QA refers to, defined in the [Price List](#25-price-list).
 
-QA Tasks claims should be requested by users and processed by Admins like regular Production tasks.  In the cases the QA provider is also an Admin, another Admin is required to approve the claim as with any tasks.
+QA Tasks claims should be requested by users and processed by Admins like regular Production tasks.  In cases where the QA provider is the Primary Admin, the Secondary Admin is required to approve the claim as with all tasks.
 
 ### 4.3.4 Task Reservations
 
-Admins can reserve unassigned tasks to users who have left a valid [Request Reservation](#233-reserving-a-task) comment.  If the Admin deems the request valid, they assign the user to the tasks in the Specification Tasks checklist, which removes those tasks from availability on the Incubator website. They may also comment to alert the user that the relevant tasks were reserved, for example:
+The Primary Admin can reserve unassigned tasks to users who have left a valid [Request Reservation](#233-reserving-a-task) comment.  If the Admin deems the request valid, they assign the user to the tasks in the Tasks checklist, which removes those tasks from availability on the Incubator website. They may also comment to alert the user that the relevant tasks were reserved, for example:
 
 ```@username reserved tasks: 1,2,3,4,5```
 
