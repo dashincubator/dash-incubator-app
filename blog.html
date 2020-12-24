@@ -1,16 +1,6 @@
----
-layout: default
-title: Blog
----
-<h1>Latest Posts</h1>
-
-<ul>
-  {% for post in site.posts %}
-    <li>
-      <h2><a href="{{ post.url | prepend:site.baseurl }}">{{ post.title }}</a></h2>
-      <h4>{{ post.date | date_to_string }} - {{ post.author }}</h4>
-      {{ post.excerpt }}
-      <hr>
-    </li>
-  {% endfor %}
-</ul>
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Redirecting to https://blog.dashincubator.app/</title>
+<meta http-equiv="refresh" content="0; URL=https://blog.dashincubator.app/">
+<link rel="canonical" href="https://blog.dashincubator.app/">
+This content has been moved to <a href="https://blog.dashincubator.app/">https://blog.dashincubator.app/</a>
