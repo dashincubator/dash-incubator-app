@@ -3,7 +3,7 @@ layout: default-rules
 ---
 View [PROTOCOL HISTORY](https://github.com/dashincubator/dash-incubator-app/commits/master/rules.md)
 
-# Dash Incubator Protocol V 1.0
+# Dash Incubator Protocol V 1.1
 
 This document is a protocol that defines the structure and operations of the [Dash Incubator App](#) and the terms that all of its users implicitly agree to. 
 
