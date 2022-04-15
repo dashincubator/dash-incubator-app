@@ -696,6 +696,5 @@ function warningsToTable(data, type) {
 
 
 function nl2br(str) {
-    return str.replace(/(?:\r\n|\r|\n)/g, '<br>');
+    return `${str}`.replace(/(?:\r\n|\r|\n)/g, '<br>');
 }
-
