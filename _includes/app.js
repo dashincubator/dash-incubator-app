@@ -256,7 +256,7 @@ function transformTrelloData(data, options = {}) {
                     let taskAssignedId = checklistItem.idMember;
                     let taskAssignedUsername = null;
                     if (taskAssignedId != null) {
-                        taskAssignedUsername = data.members.filter(name => name.id == taskAssignedId)[0].username || null;
+                        taskAssignedUsername = data.members.filter(name => name.id == taskAssignedId)[0]?.username || null;
                         if (!options.showAssignedTasks) {
                             taskWarnings.push({ warnLevel: 3, warningText: `Has an assigned member - Not shown`, cardName: card.name, cardUrl: card.shortUrl, taskDesc: checklistItemName });
                             taskFatalErrors = true;
